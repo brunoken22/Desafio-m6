@@ -2,5 +2,16 @@
   "name": "My-Api",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.11.19",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.20"
+  },
+  "scripts": {
+    "dev:back": "nodemon --watch ./server/index.ts --exec ts-node ./server/dev.ts",
+    "dev":"tsc ./server/index.ts",
+    "start":"node ./server/index.js"
+  }
 }
