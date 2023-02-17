@@ -10,6 +10,7 @@ class CodigoSala extends HTMLElement {
       const btn = this.querySelector(".btn");
       btn?.addEventListener("click", async () => {
          const name = (this.querySelector(".input") as HTMLInputElement).value;
+         state.nameTemp = name;
          await state.setName(name);
          await state.askNewRoom();
          await state.pushEstate();

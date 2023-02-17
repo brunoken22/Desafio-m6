@@ -11,8 +11,8 @@ class GenerSala extends HTMLElement {
          const cs = await state.getState();
 
          if (cs.gameState.opponentConect) {
-            console.log("conect");
             await this.render();
+            Router.go("/instruction");
          }
       });
       await this.render();
@@ -23,12 +23,11 @@ class GenerSala extends HTMLElement {
 
    async render() {
       const cs = await state.getState();
-      const div = document.createElement("div");
       const style = document.createElement("style");
-      div.classList.add("contenedor");
+      this.classList.add("contenedor");
       document.body.style.backgroundImage = `url(${fondo})`;
       document.body.style.backgroundColor = `inherit`;
-      div.innerHTML = `
+      this.innerHTML = `
       <div class="detalles">
          <div>
             <p>${cs.gameState.name} ${
@@ -106,7 +105,6 @@ class GenerSala extends HTMLElement {
    }
    `;
       this.appendChild(style);
-      this.appendChild(div);
    }
 }
 

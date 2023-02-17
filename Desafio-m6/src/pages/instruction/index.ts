@@ -2,30 +2,63 @@ const papel = require("../../img/papel.png");
 const tijera = require("../../img/tijera.png");
 const piedra = require("../../img/piedra.png");
 const fondo = require("../../img/fondo.png");
+import { async } from "@firebase/util";
 import { Router } from "@vaadin/router";
-
+import { state } from "../../state";
 class Instruction extends HTMLElement {
-   connectedCallback() {
-      this.render();
+   async connectedCallback() {
+      await state.subscribe(async () => {
+         const cs = await state.getState();
+         console.log("Hola");
+         if (cs.gameState.opponentPlay && cs.gameState.play) {
+            console.log("Pasastes");
+            await this.render();
+            Router.go("/play");
+         }
+      });
+      await this.render();
+      const btn = this.querySelector(".btn");
+      btn?.addEventListener("click", async (e) => {
+         e.preventDefault();
+         const cs = await state.getState();
+
+         if (cs.gameState.name === state.nameTemp) {
+            cs.gameState.play = true;
+            await state.pushEstate();
+         } else {
+            cs.gameState.opponentPlay = true;
+            await state.pushEstate();
+         }
+
+         if (cs.gameState.opponentPlay !== cs.gameState.play) {
+            await state.listenersRoom(cs.gameState.rtdb);
+            alert("Esperando oponent");
+         }
+      });
    }
-   render() {
-      const div = document.createElement("div");
+
+   async render() {
+      const cs = await state.getState();
       const style = document.createElement("style");
-      div.classList.add("contenedor");
+      this.classList.add("contenedor");
       document.body.style.backgroundImage = `url(${fondo})`;
       document.body.style.backgroundColor = `inherit`;
       //"Presioná jugar y elegí: piedra, papel o tijera antes de que pasen los 5 segundos.
-      div.innerHTML = `
+      this.innerHTML = `
       <div class="detalles">
-         <div>
-            <p>Bruno:0</p>
-            <p>Allison:0</p>
-         </div>
-         <div>
-            <p>Sala</p>
-            <p>15dsa6</p>
-         </div>
+      <div>
+         <p>${cs.gameState.name} ${
+         cs.gameState.name ? ": " + cs.score.you : ""
+      }</p>
+         <p class="oponent">${cs.gameState.opponentName} ${
+         cs.gameState.opponentName ? ": " + cs.score.oponent : "DEFINE"
+      }</p>
       </div>
+      <div> 
+         <p>Sala</p>
+         <p class="codigo">${cs.gameState.rtdb}</p>
+      </div>
+   </div>
       <div class="instruction">
          <custom-title inicio="Presioná jugar y elegí: piedra, papel o tijera antes de que pasen los 3 segundos."></custom-title>
          <custom-boton class="btn" title="¡Jugar!"></custom-boton>
@@ -35,7 +68,7 @@ class Instruction extends HTMLElement {
          <custom-hand direction="${tijera}"></custom-hand>
          <custom-hand direction="${piedra}"></custom-hand>
       </div>
-   `;
+    `;
 
       style.innerHTML = `
    
@@ -89,13 +122,8 @@ class Instruction extends HTMLElement {
          justify-content: space-between;
       }
    }
-   `;
+      `;
       this.appendChild(style);
-      this.appendChild(div);
-      const btn = div.querySelector(".btn");
-      btn?.addEventListener("click", () => {
-         Router.go("/play");
-      });
    }
 }
 customElements.define("page-instruction", Instruction);

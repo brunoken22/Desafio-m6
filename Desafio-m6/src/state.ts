@@ -12,9 +12,9 @@ const state = {
          rtdb: "",
          online: false,
          owner: true,
-         play: null,
+         play: false,
          opponentName: "",
-         opponentPlay: null,
+         opponentPlay: false,
          opponentConect: false,
       },
       gameReady: false,
@@ -24,6 +24,7 @@ const state = {
          oponent: 0,
       },
    },
+   nameTemp: "",
    listeners: [],
    async listenersRoom(idRtdb) {
       const db = getDatabase(app);
@@ -46,19 +47,6 @@ const state = {
          body: JSON.stringify(cs),
       });
    },
-
-   //Enviar datos del oponente
-   // async pushOponent() {
-   //    const cs = await this.getState();
-
-   //    await fetch(API_URL + "/rooms/" + cs.gameState.rtdb, {
-   //       method: "post",
-   //       headers: {
-   //          "content-type": "application/json",
-   //       },
-   //       body: JSON.stringify(cs),
-   //    });
-   // },
 
    async getState() {
       const cs = await this.data;
