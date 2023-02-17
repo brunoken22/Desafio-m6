@@ -51,7 +51,7 @@ class Instruction extends HTMLElement {
          cs.gameState.name ? ": " + cs.score.you : ""
       }</p>
          <p class="oponent">${cs.gameState.opponentName} ${
-         cs.gameState.opponentName ? ": " + cs.score.oponent : "DEFINE"
+         cs.gameState.opponentName ? ": " + cs.score.oponent : ""
       }</p>
       </div>
       <div> 

@@ -1,21 +1,20 @@
 import { API_BASE_URL, ref, onValue, app, getDatabase } from "./db";
 import { Router } from "@vaadin/router";
 const API_URL = "http://localhost:3000";
-type Play = "stone" | "papper" | "sissors" | string;
+type Play = "papel" | "tijera" | "piedra";
 const state = {
    data: {
       gameState: {
-         currentPage: null,
          name: "",
          userId: "",
          roomId: "",
          rtdb: "",
          online: false,
-         owner: true,
          play: false,
          opponentName: "",
          opponentPlay: false,
          opponentConect: false,
+         opponentSelect: "",
       },
       gameReady: false,
       playersReady: false,
