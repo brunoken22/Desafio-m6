@@ -9,9 +9,7 @@ class Instruction extends HTMLElement {
    async connectedCallback() {
       await state.subscribe(async () => {
          const cs = await state.getState();
-         console.log("Hola");
          if (cs.gameState.opponentPlay && cs.gameState.play) {
-            console.log("Pasastes");
             await this.render();
             Router.go("/play");
          }

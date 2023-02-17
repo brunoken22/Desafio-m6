@@ -1,15 +1,71 @@
-// import { state } from "../../state";
 const papel = require("../../img/papel.png");
 const tijera = require("../../img/tijera.png");
 const piedra = require("../../img/piedra.png");
-import { async } from "@firebase/util";
 import { Router } from "@vaadin/router";
 import { state } from "../../state";
 class Play extends HTMLElement {
    async connectedCallback() {
       await this.render();
       const cs = await state.getState();
+
       if (cs.gameState.name === state.nameTemp) {
+         const hands = this.querySelectorAll(".selec") as any;
+         for (let el of hands) {
+            el.addEventListener("click", (e) => {
+               e.preventDefault();
+               console.log(e.target);
+
+               clearInterval(conteo);
+               e.preventDefault();
+               el.href = " ";
+               for (let selec of hands) {
+                  if (selec.getAttribute("id") !== el.getAttribute("id")) {
+                     selec.remove();
+                  }
+               }
+               (el as any).style.cssText =
+                  "margin-top:-70px;opacity:100%;justify-content: center;pointer-events: none;cursor: default";
+
+               const countdown = this.querySelector(
+                  "custom-countdown"
+               ) as HTMLElement;
+               countdown.style.display = "none";
+
+               // const computHands = this.querySelectorAll(
+               //    ".oponent-hands custom-hand"
+               // ) as any;
+
+               // const numAleatorio = Math.ceil(Math.random() * 3);
+               // for (let ele of computHands) {
+               //    if (Number(ele.getAttribute("id")) === numAleatorio) {
+               //       // state.setMove(myPlay, ele.getAttribute("type"));
+
+               //       ele.style.display = "block";
+               //       setTimeout(() => {
+               //          Router.go("/result");
+               //       }, 2000);
+               //       return ele;
+               //    }
+               // }
+            });
+         }
+      } else {
+         const selectOponent = this.querySelectorAll(".selec");
+
+         for (let el of selectOponent) {
+            console.log(el);
+            el.addEventListener("click", (e) => {
+               e.preventDefault();
+               (el as HTMLLinkElement).href = " ";
+               for (let selec of selectOponent) {
+                  if (selec.getAttribute("id") !== el.getAttribute("id")) {
+                     selec.remove();
+                  }
+               }
+               (el as any).style.cssText =
+                  "margin-top:-70px;opacity:100%;justify-content: center;pointer-events: none;cursor: default";
+            });
+         }
       }
 
       const conteo = setInterval(async () => {
@@ -31,48 +87,6 @@ class Play extends HTMLElement {
             Router.go("/instruction");
          }
       }, 1000);
-
-      const hands = this.querySelectorAll(".selec") as any;
-      for (let el of hands) {
-         el.addEventListener("click", (e) => {
-            clearInterval(conteo);
-            e.preventDefault();
-            el.href = " ";
-            for (let selec of hands) {
-               if (selec.getAttribute("id") !== el.getAttribute("id")) {
-                  selec.remove();
-               }
-            }
-
-            const numAleatorio = Math.ceil(Math.random() * 3);
-
-            (el as any).style.cssText =
-               "margin-top:-70px;opacity:100%;justify-content: center;pointer-events: none;cursor: default";
-
-            const countdown = this.querySelector(
-               "custom-countdown"
-            ) as HTMLElement;
-
-            countdown.style.display = "none";
-            const computHands = this.querySelectorAll(
-               ".oponent-hands custom-hand"
-            ) as any;
-
-            const myPlay = (e.target as HTMLElement).getAttribute("id") as any;
-
-            for (let ele of computHands) {
-               if (Number(ele.getAttribute("id")) === numAleatorio) {
-                  // state.setMove(myPlay, ele.getAttribute("type"));
-
-                  ele.style.display = "block";
-                  setTimeout(() => {
-                     Router.go("/result");
-                  }, 2000);
-                  return ele;
-               }
-            }
-         });
-      }
    }
    async render() {
       const style = document.createElement("style");
@@ -80,9 +94,9 @@ class Play extends HTMLElement {
 
       this.innerHTML = `
          <div class="oponent-hands">
-            <custom-hand id="1" class="oponent-papel" direction="${papel}" style="display:none" type="papel"></custom-hand>
-            <custom-hand id="2" class="oponent-tijera" type="tijera" direction="${tijera}" style="display:none"></custom-hand>
-            <custom-hand id="3" class="oponent-piedra" direction="${piedra}" type="piedra"  style="display:none"></custom-hand>
+            <custom-hand id="1" class="oponent-papel select-oponet" direction="${papel}" style="display:none" type="papel"></custom-hand>
+            <custom-hand id="2" class="oponent-tijera select-oponet" type="tijera" direction="${tijera}" style="display:none"></custom-hand>
+            <custom-hand id="3" class="oponent-piedra select-oponet" direction="${piedra}" type="piedra"  style="display:none"></custom-hand>
          </div>
          <custom-countdown class="countdown"></custom-countdown>
          <div class='hands'>
