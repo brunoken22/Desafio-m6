@@ -5,7 +5,7 @@ class Result extends HTMLElement {
       this.render();
    }
    render() {
-      const div = document.createElement("div");
+      /*const div = document.createElement("div");
       div.classList.add("contenedor");
       const currentState = state.getState();
       const ganador = state.whoWins(
@@ -67,7 +67,7 @@ class Result extends HTMLElement {
       const btn = div.querySelector(".btn");
       btn?.addEventListener("click", () => {
          Router.go("/instruction");
-      });
+      });*/
    }
 }
 

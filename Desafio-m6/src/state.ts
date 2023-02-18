@@ -11,6 +11,7 @@ const state = {
          rtdb: "",
          online: false,
          play: false,
+         youSelect: "",
          opponentName: "",
          opponentPlay: false,
          opponentConect: false,

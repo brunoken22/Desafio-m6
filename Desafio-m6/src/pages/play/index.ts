@@ -1,6 +1,7 @@
 const papel = require("../../img/papel.png");
 const tijera = require("../../img/tijera.png");
 const piedra = require("../../img/piedra.png");
+import { async } from "@firebase/util";
 import { Router } from "@vaadin/router";
 import { state } from "../../state";
 class Play extends HTMLElement {
@@ -11,9 +12,11 @@ class Play extends HTMLElement {
       if (cs.gameState.name === state.nameTemp) {
          const hands = this.querySelectorAll(".selec") as any;
          for (let el of hands) {
-            el.addEventListener("click", (e) => {
+            el.addEventListener("click", async (e) => {
                e.preventDefault();
-               console.log(e.target);
+               const cs = await state.getState();
+               cs.gameState.youSelect = (e.target as any).id;
+               await state.pushEstate();
 
                clearInterval(conteo);
                e.preventDefault();
@@ -53,9 +56,11 @@ class Play extends HTMLElement {
          const selectOponent = this.querySelectorAll(".selec");
 
          for (let el of selectOponent) {
-            console.log(el);
-            el.addEventListener("click", (e) => {
+            el.addEventListener("click", async (e) => {
                e.preventDefault();
+               const cs = await state.getState();
+               cs.gameState.opponentSelect = (e.target as any).id;
+               await state.pushEstate();
                (el as HTMLLinkElement).href = " ";
                for (let selec of selectOponent) {
                   if (selec.getAttribute("id") !== el.getAttribute("id")) {
