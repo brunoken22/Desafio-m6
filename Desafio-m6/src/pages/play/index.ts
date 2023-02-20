@@ -6,14 +6,28 @@ import { Router } from "@vaadin/router";
 import { state } from "../../state";
 class Play extends HTMLElement {
    async connectedCallback() {
+      await state.subscribe(async () => {
+         const cs = await state.getState();
+
+         if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
+            await this.render();
+            console.log("bienvenido");
+            return Router.go("/result");
+         }
+      });
       await this.render();
       const cs = await state.getState();
-
+      await state.listenersRoom(cs.gameState.rtdb);
+      if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
+         return Router.go("/result");
+      }
       if (cs.gameState.name === state.nameTemp) {
          const hands = this.querySelectorAll(".selec") as any;
          for (let el of hands) {
             el.addEventListener("click", async (e) => {
                e.preventDefault();
+               console.log(e.target);
+
                const cs = await state.getState();
                cs.gameState.youSelect = (e.target as any).id;
                await state.pushEstate();
@@ -58,6 +72,7 @@ class Play extends HTMLElement {
          for (let el of selectOponent) {
             el.addEventListener("click", async (e) => {
                e.preventDefault();
+               console.log(e.target);
                const cs = await state.getState();
                cs.gameState.opponentSelect = (e.target as any).id;
                await state.pushEstate();

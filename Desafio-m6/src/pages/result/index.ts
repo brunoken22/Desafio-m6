@@ -4,20 +4,22 @@ class Result extends HTMLElement {
    connectedCallback() {
       this.render();
    }
-   render() {
-      /*const div = document.createElement("div");
-      div.classList.add("contenedor");
-      const currentState = state.getState();
+   async render() {
+      const cs = await state.getState();
+      console.log(cs.gameState.opponentSelect);
+      console.log(cs.gameState.youSelect);
+      state.whoWins(cs.gameState.youSelect, cs.gameState.opponentSelect);
+      this.classList.add("contenedor");
       const ganador = state.whoWins(
-         currentState.currentGame.myPlay,
-         currentState.currentGame.computerPlay
+         cs.gameState.youSelect,
+         cs.gameState.opponentSelect
       );
 
       // state.saveHistory(
       //    currentState.currentGame.myPlay,
       //    currentState.currentGame.computerPlay
       // );
-      div.innerHTML = ` 
+      this.innerHTML = ` 
       <custom-jugada jugada="${ganador}"></custom-jugada>
       <custom-score ganador="${ganador}"></custom-score>
       <custom-boton class="btn" title="Volver a jugar"></custom-boton>
@@ -47,8 +49,7 @@ class Result extends HTMLElement {
    }
    `;
 
-      const fondo = div.querySelector("custom-jugada")!.getAttribute("jugada");
-      // console.log(fondo);
+      const fondo = this.querySelector("custom-jugada")!.getAttribute("jugada");
 
       if (fondo === "empate") {
          document.body.style.backgroundColor = "#4AC0FF";
@@ -62,12 +63,11 @@ class Result extends HTMLElement {
       }
 
       this.appendChild(style);
-      this.appendChild(div);
 
-      const btn = div.querySelector(".btn");
+      const btn = this.querySelector(".btn");
       btn?.addEventListener("click", () => {
          Router.go("/instruction");
-      });*/
+      });
    }
 }
 

@@ -1,7 +1,7 @@
 import { API_BASE_URL, ref, onValue, app, getDatabase } from "./db";
 import { Router } from "@vaadin/router";
 const API_URL = "http://localhost:3000";
-type Play = "papel" | "tijera" | "piedra";
+type jugada = "papel" | "tijera" | "piedra";
 const state = {
    data: {
       gameState: {
@@ -116,9 +116,36 @@ const state = {
       this.setState(cs);
    },
 
+   whoWins(myPlay: jugada, computerPlay: jugada) {
+      const ganeConTijera = myPlay == "tijera" && computerPlay == "papel";
+      const ganeConPiedra = myPlay == "piedra" && computerPlay == "tijera";
+      const ganeConPapel = myPlay == "papel" && computerPlay == "piedra";
+      const gane = [ganeConPapel, ganeConTijera, ganeConPiedra].includes(true);
+
+      const computerGaneConTijera =
+         computerPlay == "tijera" && myPlay == "papel";
+      const computerGaneConPiedra =
+         computerPlay == "piedra" && myPlay == "tijera";
+      const computerGaneConPapel =
+         computerPlay == "papel" && myPlay == "piedra";
+      const computerGane = [
+         computerGaneConTijera,
+         computerGaneConPiedra,
+         computerGaneConPapel,
+      ].includes(true);
+
+      if (gane === computerGane) {
+         return "empate";
+      } else if (gane) {
+         return true;
+      } else if (computerGane) {
+         return false;
+      }
+   },
+
    async subscribe(cb) {
       this.listeners.push(cb);
-      console.log("El state a cambiado", this.data);
+      // console.log("El state a cambiado", this.data);
    },
 };
 
