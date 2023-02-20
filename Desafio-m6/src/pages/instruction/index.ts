@@ -29,7 +29,14 @@ class Instruction extends HTMLElement {
 
          if (cs.gameState.opponentPlay !== cs.gameState.play) {
             await state.listenersRoom(cs.gameState.rtdb);
-            alert("Esperando oponent");
+            const instruction = this.querySelector(
+               ".instruction"
+            ) as HTMLElement;
+            instruction.style.display = "none";
+            const espera = this.querySelector(".espera") as HTMLElement;
+            espera.style.display = "block";
+         } else {
+            Router.go("/result");
          }
       });
    }
@@ -59,6 +66,9 @@ class Instruction extends HTMLElement {
       <div class="instruction">
          <custom-title inicio="Presioná jugar y elegí: piedra, papel o tijera antes de que pasen los 3 segundos."></custom-title>
          <custom-boton class="btn" title="¡Jugar!"></custom-boton>
+      </div>
+      <div class="espera" style="display:none">
+         <h2 style ="font-size:2.5rem">Esperando jugador ...</h2>
       </div>
       <div class='hand'>
          <custom-hand direction="${papel}"></custom-hand>

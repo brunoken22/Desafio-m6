@@ -8,19 +8,15 @@ class Play extends HTMLElement {
    async connectedCallback() {
       await state.subscribe(async () => {
          const cs = await state.getState();
-
          if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
-            await this.render();
             console.log("bienvenido");
-            return Router.go("/result");
+            Router.go("/result");
+            await this.render();
          }
       });
       await this.render();
       const cs = await state.getState();
-      await state.listenersRoom(cs.gameState.rtdb);
-      if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
-         return Router.go("/result");
-      }
+
       if (cs.gameState.name === state.nameTemp) {
          const hands = this.querySelectorAll(".selec") as any;
          for (let el of hands) {
@@ -47,6 +43,7 @@ class Play extends HTMLElement {
                   "custom-countdown"
                ) as HTMLElement;
                countdown.style.display = "none";
+               await state.listenersRoom(cs.gameState.rtdb);
 
                // const computHands = this.querySelectorAll(
                //    ".oponent-hands custom-hand"
@@ -84,6 +81,7 @@ class Play extends HTMLElement {
                }
                (el as any).style.cssText =
                   "margin-top:-70px;opacity:100%;justify-content: center;pointer-events: none;cursor: default";
+               await state.listenersRoom(cs.gameState.rtdb);
             });
          }
       }

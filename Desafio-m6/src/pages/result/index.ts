@@ -8,7 +8,6 @@ class Result extends HTMLElement {
       const cs = await state.getState();
       console.log(cs.gameState.opponentSelect);
       console.log(cs.gameState.youSelect);
-      state.whoWins(cs.gameState.youSelect, cs.gameState.opponentSelect);
       this.classList.add("contenedor");
       const ganador = state.whoWins(
          cs.gameState.youSelect,
@@ -19,6 +18,7 @@ class Result extends HTMLElement {
       //    currentState.currentGame.myPlay,
       //    currentState.currentGame.computerPlay
       // );
+
       this.innerHTML = ` 
       <custom-jugada jugada="${ganador}"></custom-jugada>
       <custom-score ganador="${ganador}"></custom-score>
