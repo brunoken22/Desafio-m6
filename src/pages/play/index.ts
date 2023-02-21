@@ -6,85 +6,25 @@ import { Router } from "@vaadin/router";
 import { state } from "../../state";
 class Play extends HTMLElement {
    async connectedCallback() {
-      await state.subscribe(async () => {
-         const cs = await state.getState();
-         if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
-            console.log("bienvenido");
-            Router.go("/result");
-            await this.render();
-         }
-      });
+      // await state.subscribe(async () => {
+      //    const cs = await state.getState();
+      //    if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
+      //       console.log("bienvenido");
+      //       Router.go("/result");
+      //       await this.render();
+      //    }
+      // });
       await this.render();
       const cs = await state.getState();
-
-      if (cs.gameState.name === state.nameTemp) {
-         const hands = this.querySelectorAll(".selec") as any;
-         for (let el of hands) {
-            el.addEventListener("click", async (e) => {
-               e.preventDefault();
-               console.log(e.target);
-
-               const cs = await state.getState();
-               cs.gameState.youSelect = (e.target as any).id;
-               await state.pushEstate();
-
-               clearInterval(conteo);
-               e.preventDefault();
-               el.href = " ";
-               for (let selec of hands) {
-                  if (selec.getAttribute("id") !== el.getAttribute("id")) {
-                     selec.remove();
-                  }
-               }
-               (el as any).style.cssText =
-                  "margin-top:-70px;opacity:100%;justify-content: center;pointer-events: none;cursor: default";
-
-               const countdown = this.querySelector(
-                  "custom-countdown"
-               ) as HTMLElement;
-               countdown.style.display = "none";
-               await state.listenersRoom(cs.gameState.rtdb);
-
-               // const computHands = this.querySelectorAll(
-               //    ".oponent-hands custom-hand"
-               // ) as any;
-
-               // const numAleatorio = Math.ceil(Math.random() * 3);
-               // for (let ele of computHands) {
-               //    if (Number(ele.getAttribute("id")) === numAleatorio) {
-               //       // state.setMove(myPlay, ele.getAttribute("type"));
-
-               //       ele.style.display = "block";
-               //       setTimeout(() => {
-               //          Router.go("/result");
-               //       }, 2000);
-               //       return ele;
-               //    }
-               // }
-            });
-         }
-      } else {
-         const selectOponent = this.querySelectorAll(".selec");
-
-         for (let el of selectOponent) {
-            el.addEventListener("click", async (e) => {
-               e.preventDefault();
-               console.log(e.target);
-               const cs = await state.getState();
-               cs.gameState.opponentSelect = (e.target as any).id;
-               await state.pushEstate();
-               (el as HTMLLinkElement).href = " ";
-               for (let selec of selectOponent) {
-                  if (selec.getAttribute("id") !== el.getAttribute("id")) {
-                     selec.remove();
-                  }
-               }
-               (el as any).style.cssText =
-                  "margin-top:-70px;opacity:100%;justify-content: center;pointer-events: none;cursor: default";
-               await state.listenersRoom(cs.gameState.rtdb);
-            });
-         }
+      await this.movies();
+      if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
+         state.whoWins(cs.gameState.youSelect, cs.gameState.opponentSelect);
       }
+      // if (cs.gameState.name === state.nameTemp) {
+      //    await this.movies()
+      // } else {
+      //    await this.movies()
+      // }
 
       const conteo = setInterval(async () => {
          const countdown = this.querySelector(
@@ -95,9 +35,11 @@ class Play extends HTMLElement {
             const cs = await state.getState();
             if (cs.gameState.name === state.nameTemp) {
                cs.gameState.play = false;
+               cs.gameState.youSelect = "";
                await state.pushEstate();
             } else {
                cs.gameState.opponentPlay = false;
+               cs.gameState.opponentSelect = "";
                await state.pushEstate();
             }
             clearInterval(conteo);
@@ -106,6 +48,59 @@ class Play extends HTMLElement {
          }
       }, 1000);
    }
+
+   async movies() {
+      const hands = this.querySelectorAll(".selec") as any;
+      for (let el of hands) {
+         el.addEventListener("click", async (e) => {
+            e.preventDefault();
+            el.href = " ";
+            console.log(e.target);
+            const cs = await state.getState();
+            if (cs.gameState.nameTemp === cs.gameState.name) {
+               cs.gameState.youSelect = (e.target as any).id;
+               await state.pushEstate();
+            } else {
+               cs.gameState.opponentSelect = (e.target as any).id;
+               await state.pushEstate();
+            }
+
+            for (let selec of hands) {
+               if (selec.getAttribute("id") !== el.getAttribute("id")) {
+                  selec.remove();
+               }
+            }
+            (el as any).style.cssText =
+               "margin-top:-70px;opacity:100%;justify-content: center;pointer-events: none;cursor: default";
+
+            const countdown = this.querySelector(
+               "custom-countdown"
+            ) as HTMLElement;
+            countdown.style.display = "none";
+            if (cs.gameState.youSelect && cs.gameState.opponentSelect) {
+               Router.go("/result");
+            }
+            await state.listenersRoom(cs.gameState.rtdb);
+            // const computHands = this.querySelectorAll(
+            //    ".oponent-hands custom-hand"
+            // ) as any;
+
+            // const numAleatorio = Math.ceil(Math.random() * 3);
+            // for (let ele of computHands) {
+            //    if (Number(ele.getAttribute("id")) === numAleatorio) {
+            //       // state.setMove(myPlay, ele.getAttribute("type"));
+
+            //       ele.style.display = "block";
+            //       setTimeout(() => {
+            //          Router.go("/result");
+            //       }, 2000);
+            //       return ele;
+            //    }
+            // }
+         });
+      }
+   }
+
    async render() {
       const style = document.createElement("style");
       this.classList.add("contenedor");

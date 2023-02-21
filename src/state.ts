@@ -135,10 +135,13 @@ const state = {
       ].includes(true);
 
       if (gane === computerGane) {
+         console.log("empate");
          return "empate";
       } else if (gane) {
+         console.log(true);
          return true;
       } else if (computerGane) {
+         console.log(false);
          return false;
       }
    },
