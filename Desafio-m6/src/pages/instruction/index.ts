@@ -36,7 +36,7 @@ class Instruction extends HTMLElement {
             const espera = this.querySelector(".espera") as HTMLElement;
             espera.style.display = "block";
          } else {
-            Router.go("/result");
+            Router.go("/play");
          }
       });
    }
