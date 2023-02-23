@@ -15,17 +15,6 @@ class Play extends HTMLElement {
       //    }
       // });
       await this.render();
-      const cs = await state.getState();
-      await this.movies();
-      if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
-         state.whoWins(cs.gameState.youSelect, cs.gameState.opponentSelect);
-      }
-      // if (cs.gameState.name === state.nameTemp) {
-      //    await this.movies()
-      // } else {
-      //    await this.movies()
-      // }
-
       const conteo = setInterval(async () => {
          const countdown = this.querySelector(
             "custom-countdown"
@@ -47,17 +36,26 @@ class Play extends HTMLElement {
             Router.go("/instruction");
          }
       }, 1000);
+      const cs = await state.getState();
+      await this.movies(conteo);
+      if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
+         state.whoWins(cs.gameState.youSelect, cs.gameState.opponentSelect);
+         clearInterval(conteo);
+         Router.go("/result");
+      }
    }
 
-   async movies() {
+   async movies(conteo) {
       const hands = this.querySelectorAll(".selec") as any;
       for (let el of hands) {
          el.addEventListener("click", async (e) => {
             e.preventDefault();
-            el.href = " ";
             console.log(e.target);
+
+            el.href = " ";
             const cs = await state.getState();
-            if (cs.gameState.nameTemp === cs.gameState.name) {
+
+            if (state.nameTemp === cs.gameState.name) {
                cs.gameState.youSelect = (e.target as any).id;
                await state.pushEstate();
             } else {
@@ -77,7 +75,11 @@ class Play extends HTMLElement {
                "custom-countdown"
             ) as HTMLElement;
             countdown.style.display = "none";
+
+            console.log("llegando  a result");
             if (cs.gameState.youSelect && cs.gameState.opponentSelect) {
+               console.log("llegastes");
+               clearInterval(conteo);
                Router.go("/result");
             }
             await state.listenersRoom(cs.gameState.rtdb);

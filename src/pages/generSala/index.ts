@@ -31,10 +31,10 @@ class GenerSala extends HTMLElement {
       <div class="detalles">
          <div>
             <p>${cs.gameState.name} ${
-         cs.gameState.name ? ": " + cs.score.you : ""
+         cs.gameState.name ? ": " + cs.score.you : "Espernado ..."
       }</p>
             <p class="oponent">${cs.gameState.opponentName} ${
-         cs.gameState.opponentName ? ": " + cs.score.oponent : ""
+         cs.gameState.opponentName ? ": " + cs.score.oponent : "Esperando ..."
       }</p>
          </div>
          <div> 

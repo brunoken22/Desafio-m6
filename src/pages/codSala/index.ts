@@ -60,6 +60,7 @@ class CodigoSala extends HTMLElement {
          font-size:2rem;
       }
       .input{
+         background-color:transparent;
          text-indent:10px;
          font-family: 'Odibee Sans', cursive;
          font-size:3rem;

@@ -59,7 +59,10 @@ export class ConnectSala extends HTMLElement {
             height: 82vh;
          }
       }
+      .name{
+      }
       .input{
+         background-color:transparent;
          text-indent:10px;
          font-family: 'Odibee Sans', cursive;
          font-size:3rem;
