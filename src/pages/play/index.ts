@@ -1,19 +1,18 @@
 const papel = require("../../img/papel.png");
 const tijera = require("../../img/tijera.png");
 const piedra = require("../../img/piedra.png");
-import { async } from "@firebase/util";
 import { Router } from "@vaadin/router";
 import { state } from "../../state";
 class Play extends HTMLElement {
    async connectedCallback() {
-      // await state.subscribe(async () => {
-      //    const cs = await state.getState();
-      //    if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
-      //       console.log("bienvenido");
-      //       Router.go("/result");
-      //       await this.render();
-      //    }
-      // });
+      await state.subscribe(async () => {
+         const cs = await state.getState();
+         if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
+            console.log("bienvenido");
+            clearInterval(conteo);
+            Router.go("/result");
+         }
+      });
       await this.render();
       const conteo = setInterval(async () => {
          const countdown = this.querySelector(
@@ -36,8 +35,8 @@ class Play extends HTMLElement {
             Router.go("/instruction");
          }
       }, 1000);
-      const cs = await state.getState();
       await this.movies(conteo);
+      const cs = await state.getState();
       if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
          state.whoWins(cs.gameState.youSelect, cs.gameState.opponentSelect);
          clearInterval(conteo);
@@ -76,13 +75,13 @@ class Play extends HTMLElement {
             ) as HTMLElement;
             countdown.style.display = "none";
 
-            console.log("llegando  a result");
+            await state.listenersRoom(cs.gameState.rtdb);
+
             if (cs.gameState.youSelect && cs.gameState.opponentSelect) {
                console.log("llegastes");
                clearInterval(conteo);
                Router.go("/result");
             }
-            await state.listenersRoom(cs.gameState.rtdb);
             // const computHands = this.querySelectorAll(
             //    ".oponent-hands custom-hand"
             // ) as any;
