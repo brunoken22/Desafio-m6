@@ -8,11 +8,13 @@ class Play extends HTMLElement {
       await state.subscribe(async () => {
          const cs = await state.getState();
          if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
-            console.log("bienvenido");
             clearInterval(conteo);
-            Router.go("/result");
+            console.log("bienvenido a result");
+            Router.go("/instruction");
+            console.log("Hola");
          }
       });
+
       await this.render();
       const conteo = setInterval(async () => {
          const countdown = this.querySelector(
@@ -36,12 +38,6 @@ class Play extends HTMLElement {
          }
       }, 1000);
       await this.movies(conteo);
-      const cs = await state.getState();
-      if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
-         state.whoWins(cs.gameState.youSelect, cs.gameState.opponentSelect);
-         clearInterval(conteo);
-         Router.go("/result");
-      }
    }
 
    async movies(conteo) {
@@ -49,7 +45,6 @@ class Play extends HTMLElement {
       for (let el of hands) {
          el.addEventListener("click", async (e) => {
             e.preventDefault();
-            console.log(e.target);
 
             el.href = " ";
             const cs = await state.getState();
@@ -76,28 +71,11 @@ class Play extends HTMLElement {
             countdown.style.display = "none";
 
             await state.listenersRoom(cs.gameState.rtdb);
-
             if (cs.gameState.youSelect && cs.gameState.opponentSelect) {
                console.log("llegastes");
                clearInterval(conteo);
                Router.go("/result");
             }
-            // const computHands = this.querySelectorAll(
-            //    ".oponent-hands custom-hand"
-            // ) as any;
-
-            // const numAleatorio = Math.ceil(Math.random() * 3);
-            // for (let ele of computHands) {
-            //    if (Number(ele.getAttribute("id")) === numAleatorio) {
-            //       // state.setMove(myPlay, ele.getAttribute("type"));
-
-            //       ele.style.display = "block";
-            //       setTimeout(() => {
-            //          Router.go("/result");
-            //       }, 2000);
-            //       return ele;
-            //    }
-            // }
          });
       }
    }
