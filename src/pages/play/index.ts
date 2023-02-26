@@ -10,7 +10,7 @@ class Play extends HTMLElement {
          if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
             clearInterval(conteo);
             console.log("bienvenido a result");
-            Router.go("/instruction");
+            Router.go("/result");
             console.log("Hola");
          }
       });
@@ -71,11 +71,11 @@ class Play extends HTMLElement {
             countdown.style.display = "none";
 
             await state.listenersRoom(cs.gameState.rtdb);
-            if (cs.gameState.youSelect && cs.gameState.opponentSelect) {
-               console.log("llegastes");
-               clearInterval(conteo);
-               Router.go("/result");
-            }
+            // if (cs.gameState.youSelect && cs.gameState.opponentSelect) {
+            //    console.log("llegastes");
+            //    clearInterval(conteo);
+            //    Router.go("/result");
+            // }
          });
       }
    }
