@@ -7,16 +7,32 @@ customElements.define(
          super();
          this.render();
       }
-      render() {
-         const shadow = this.attachShadow({ mode: "open" });
-         const div = document.createElement("div");
-         div.classList.add("score");
+      async render() {
+         const ganador = this.getAttribute("ganador") as any;
+         const cs = await state.getState();
+         if (ganador == "empate") {
+            let count = 0;
+         } else if (ganador === "true") {
+            let count = 0;
+            cs.score.you = count + 1;
+            await state.pushEstate();
+         } else if (ganador === "false") {
+            let count = 0;
+            cs.score.oponent = count + 1;
+            await state.pushEstate();
+         }
 
-         div.innerHTML = `
+         this.classList.add("score");
+
+         this.innerHTML = `
                <h3>Score</h3>
                <div class="puntos">
-                  <h4>Vos : ${"userScore"}</h4>
-                  <h4>Máquina : ${"computerScore"}</h4>
+                  <h4>${cs.gameState.name} ${
+            cs.gameState.name ? ": " + cs.score.you : ""
+         }</h4>
+                     <h4>${cs.gameState.opponentName} ${
+            cs.gameState.opponentName ? ": " + cs.score.oponent : ""
+         }</h4>
                </div>
             `;
 
@@ -48,8 +64,7 @@ customElements.define(
                }
             `;
 
-         shadow.appendChild(div);
-         shadow.appendChild(style);
+         this.appendChild(style);
       }
    }
 );

@@ -1,8 +1,8 @@
 import { state } from "../../state";
 import { Router } from "@vaadin/router";
 class Result extends HTMLElement {
-   connectedCallback() {
-      this.render();
+   async connectedCallback() {
+      await this.render();
    }
    async render() {
       const cs = await state.getState();
@@ -11,7 +11,6 @@ class Result extends HTMLElement {
          cs.gameState.youSelect,
          cs.gameState.opponentSelect
       );
-      console.log(ganador);
 
       // state.saveHistory(
       //    currentState.currentGame.myPlay,
@@ -64,8 +63,19 @@ class Result extends HTMLElement {
       this.appendChild(style);
 
       const btn = this.querySelector(".btn");
-      btn?.addEventListener("click", () => {
-         Router.go("/instruction");
+      btn?.addEventListener("click", async () => {
+         const cs = await state.getState();
+         if (state.nameTemp === cs.gameState.name) {
+            cs.gameState.play = false;
+            cs.gameState.youSelect = "";
+            await state.pushEstate();
+            // Router.go("/instruction");
+         } else {
+            cs.gameState.opponentPlay = false;
+            cs.gameState.opponentSelect = "";
+            await state.pushEstate();
+            // Router.go("/instruction");
+         }
       });
    }
 }

@@ -6,7 +6,7 @@ class Boton extends HTMLElement {
    render() {
       const shadow = this.attachShadow({ mode: "open" });
       const div = document.createElement("div");
-      const title = this.getAttribute("title")!;
+      const title = this.getAttribute("title");
 
       div.innerHTML = `
             <button class="btn ${

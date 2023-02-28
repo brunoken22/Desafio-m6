@@ -116,7 +116,7 @@ const state = {
       this.setState(cs);
    },
 
-   whoWins(myPlay: jugada, computerPlay: jugada) {
+   whoWins(myPlay: jugada, computerPlay: jugada): string | boolean {
       const ganeConTijera = myPlay == "tijera" && computerPlay == "papel";
       const ganeConPiedra = myPlay == "piedra" && computerPlay == "tijera";
       const ganeConPapel = myPlay == "papel" && computerPlay == "piedra";
@@ -135,13 +135,10 @@ const state = {
       ].includes(true);
 
       if (gane === computerGane) {
-         console.log("empate");
          return "empate";
       } else if (gane) {
-         console.log(true);
          return true;
       } else if (computerGane) {
-         console.log(false);
          return false;
       }
    },
