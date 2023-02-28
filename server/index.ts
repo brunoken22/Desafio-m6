@@ -2,28 +2,7 @@ import * as express from "express";
 import { baseDeDatos, rtdb } from "./db";
 import { nanoid } from "nanoid";
 import * as cors from "cors";
-type Data = {
-   gameState: {
-      currentPage: null;
-      name: "";
-      userId: "";
-      roomId: "";
-      rtdb: "";
-      online: false;
-      owner: true;
-      play: null;
-      opponentPlay: null;
-      lastGameOwnerResult: null;
-      lastGameGuestResult: null;
-      opponentName: "";
-   };
-   gameReady: false;
-   playersReady: false;
-   score: {
-      you: 0;
-      oponent: 0;
-   };
-};
+
 const app = express();
 const port = process.env.PORT || 3000;
 

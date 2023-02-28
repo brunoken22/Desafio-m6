@@ -18,7 +18,7 @@ const state = {
          opponentSelect: "",
       },
       gameReady: false,
-      playersReady: false,
+      winner: "",
       score: {
          you: 0,
          oponent: 0,

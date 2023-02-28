@@ -5,16 +5,6 @@ import { Router } from "@vaadin/router";
 import { state } from "../../state";
 class Play extends HTMLElement {
    async connectedCallback() {
-      await state.subscribe(async () => {
-         const cs = await state.getState();
-         if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
-            clearInterval(conteo);
-            console.log("bienvenido a result");
-            Router.go("/result");
-            console.log("Hola");
-         }
-      });
-
       await this.render();
       const conteo = setInterval(async () => {
          const countdown = this.querySelector(
@@ -35,12 +25,18 @@ class Play extends HTMLElement {
             clearInterval(conteo);
 
             Router.go("/instruction");
+         } else {
+            const cs = await state.getState();
+            if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
+               clearInterval(conteo);
+               Router.go("/result");
+            }
          }
       }, 1000);
-      await this.movies(conteo);
+      await this.movies();
    }
 
-   async movies(conteo) {
+   async movies() {
       const hands = this.querySelectorAll(".selec") as any;
       for (let el of hands) {
          el.addEventListener("click", async (e) => {
@@ -71,11 +67,6 @@ class Play extends HTMLElement {
             countdown.style.display = "none";
 
             await state.listenersRoom(cs.gameState.rtdb);
-            // if (cs.gameState.youSelect && cs.gameState.opponentSelect) {
-            //    console.log("llegastes");
-            //    clearInterval(conteo);
-            //    Router.go("/result");
-            // }
          });
       }
    }

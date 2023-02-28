@@ -6,13 +6,12 @@ class Result extends HTMLElement {
    }
    async render() {
       const cs = await state.getState();
-      console.log(cs.gameState.opponentSelect);
-      console.log(cs.gameState.youSelect);
       this.classList.add("contenedor");
       const ganador = state.whoWins(
          cs.gameState.youSelect,
          cs.gameState.opponentSelect
       );
+      console.log(ganador);
 
       // state.saveHistory(
       //    currentState.currentGame.myPlay,
