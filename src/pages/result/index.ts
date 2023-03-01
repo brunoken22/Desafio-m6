@@ -3,15 +3,31 @@ import { Router } from "@vaadin/router";
 class Result extends HTMLElement {
    async connectedCallback() {
       await this.render();
+      const btn = this.querySelector(".btn");
+      btn?.addEventListener("click", async (e) => {
+         e.preventDefault();
+         const cs = await state.getState();
+         if (state.nameTemp === cs.gameState.name) {
+            cs.gameState.play = false;
+            cs.gameState.youSelect = "";
+            await state.pushEstate();
+            console.log("hola");
+         } else {
+            cs.gameState.opponentPlay = false;
+            cs.gameState.opponentSelect = "";
+            await state.pushEstate();
+            console.log("hola2");
+         }
+      });
    }
    async render() {
       const cs = await state.getState();
-      this.classList.add("contenedor");
       const ganador = state.whoWins(
          cs.gameState.youSelect,
          cs.gameState.opponentSelect
       );
 
+      this.classList.add("contenedor");
       // state.saveHistory(
       //    currentState.currentGame.myPlay,
       //    currentState.currentGame.computerPlay
@@ -61,22 +77,6 @@ class Result extends HTMLElement {
       }
 
       this.appendChild(style);
-
-      const btn = this.querySelector(".btn");
-      btn?.addEventListener("click", async () => {
-         const cs = await state.getState();
-         if (state.nameTemp === cs.gameState.name) {
-            cs.gameState.play = false;
-            cs.gameState.youSelect = "";
-            await state.pushEstate();
-            // Router.go("/instruction");
-         } else {
-            cs.gameState.opponentPlay = false;
-            cs.gameState.opponentSelect = "";
-            await state.pushEstate();
-            // Router.go("/instruction");
-         }
-      });
    }
 }
 

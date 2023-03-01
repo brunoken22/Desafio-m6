@@ -22,8 +22,6 @@ class Play extends HTMLElement {
                cs.gameState.opponentSelect = "";
                await state.pushEstate();
             }
-            clearInterval(conteo);
-
             Router.go("/instruction");
          } else {
             const cs = await state.getState();
