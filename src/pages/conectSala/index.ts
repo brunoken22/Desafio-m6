@@ -25,10 +25,9 @@ export class ConnectSala extends HTMLElement {
       });
    }
    async render() {
-      const div = document.createElement("div");
       const style = document.createElement("style");
-      div.classList.add("contenedor");
-      div.innerHTML = `
+      this.classList.add("contenedor");
+      this.innerHTML = `
       <custom-title inicio="${"Piedra<br> Papel <span class='span-o'>o</span> Tijera"}"></custom-title>
       <input type="text" class="id input" placeholder="Ingrese el ID">
       <input type="text" class="name input" placeholder="Tu nombre ...">
@@ -91,7 +90,6 @@ export class ConnectSala extends HTMLElement {
       `;
 
       this.appendChild(style);
-      this.appendChild(div);
    }
 }
 customElements.define("page-connect-sala", ConnectSala);

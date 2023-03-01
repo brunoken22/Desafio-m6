@@ -103,11 +103,8 @@ app.get("/rooms/:id", (req, res) => {
 //MANDO state A LA RTDB
 app.post("/rooms/:rtdbId", (req, res) => {
    const { rtdbId } = req.params;
-   const cs = req.body;
    const refrtdb = rtdb.ref("/rooms/" + rtdbId + "/data");
-   const refrtopon = rtdb.ref(
-      "/rooms/" + rtdbId + "/data/gameState/opponentName"
-   );
+
    const refif = rtdb.ref("/rooms");
    refif.get().then((snapshot) => {
       snapshot.forEach((doc) => {

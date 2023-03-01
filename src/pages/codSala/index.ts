@@ -18,12 +18,11 @@ class CodigoSala extends HTMLElement {
       });
    }
    render() {
-      const div = document.createElement("div");
       const style = document.createElement("style");
-      div.classList.add("contenedor");
+      this.classList.add("contenedor");
       document.body.style.backgroundImage = `url(${fondo})`;
       document.body.style.backgroundColor = `inherit`;
-      div.innerHTML = `
+      this.innerHTML = `
       <custom-title inicio="${"Piedra<br> Papel <span class='span-o'>o</span> Tijera"}"></custom-title>
       <label for="name" class="label">Tu Nombre</label>
       <input type="text" class="input" id="name" placeholder="Bruno...">
@@ -87,7 +86,6 @@ class CodigoSala extends HTMLElement {
       }
       `;
       this.appendChild(style);
-      this.appendChild(div);
    }
 }
 customElements.define("page-codigo-sala", CodigoSala);

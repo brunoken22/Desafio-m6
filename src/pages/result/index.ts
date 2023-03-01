@@ -6,18 +6,23 @@ class Result extends HTMLElement {
       const btn = this.querySelector(".btn");
       btn?.addEventListener("click", async (e) => {
          e.preventDefault();
+         console.log("hicistes click");
+
          const cs = await state.getState();
          if (state.nameTemp === cs.gameState.name) {
             cs.gameState.play = false;
             cs.gameState.youSelect = "";
             await state.pushEstate();
+            console.log(await state.pushEstate);
+
             console.log("hola");
-         } else {
-            cs.gameState.opponentPlay = false;
-            cs.gameState.opponentSelect = "";
-            await state.pushEstate();
-            console.log("hola2");
          }
+         // else {
+         //    cs.gameState.opponentPlay = false;
+         //    cs.gameState.opponentSelect = "";
+         //    await state.pushEstate();
+         //    console.log("hola2");
+         // }
       });
    }
    async render() {
