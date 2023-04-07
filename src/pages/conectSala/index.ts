@@ -18,6 +18,7 @@ export class ConnectSala extends HTMLElement {
             cs.gameState.rtdb = id.value;
             cs.gameState.opponentName = name.value;
             cs.gameState.opponentConect = true;
+
             await state.pushEstate();
 
             Router.go("/generSala");

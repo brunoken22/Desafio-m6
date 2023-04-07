@@ -1,13 +1,24 @@
+import { Router } from "@vaadin/router";
+import { state } from "../../state";
 class Countdown extends HTMLElement {
-   constructor() {
-      super();
+   connectedCallback() {
       this.render();
+      let cantidad = 5;
+
+      const countNumber = this.querySelector(".countdown-number") as any;
+      let tiempo = setInterval(async () => {
+         cantidad--;
+
+         countNumber.innerHTML = cantidad.toString();
+
+         if (cantidad < 1) {
+            clearInterval(tiempo);
+         }
+      }, 1000);
    }
    render() {
-      const shadow = this.attachShadow({ mode: "open" });
-      const div = document.createElement("div");
-      div.classList.add("countdown");
-      div.innerHTML = `
+      this.classList.add("countdown");
+      this.innerHTML = `
       <h3 class="countdown-number">5</h3>
       <svg class="svg">
         <circle class="circle" r="90" cx="165" cy="140"></circle>
@@ -61,20 +72,7 @@ class Countdown extends HTMLElement {
             }
     `;
 
-      let cantidad = 5;
-
-      const countNumber = div.querySelector(".countdown-number") as any;
-      let tiempo = setInterval(() => {
-         cantidad--;
-
-         countNumber.innerHTML = cantidad.toString();
-
-         if (cantidad < 1) {
-            clearInterval(tiempo);
-         }
-      }, 1000);
-      shadow.appendChild(div);
-      shadow.appendChild(style);
+      this.appendChild(style);
    }
 }
 customElements.define("custom-countdown", Countdown);

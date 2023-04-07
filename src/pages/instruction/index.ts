@@ -6,39 +6,48 @@ import { Router } from "@vaadin/router";
 import { state } from "../../state";
 class Instruction extends HTMLElement {
    async connectedCallback() {
+      const cs = await state.getState();
+      if ((cs.gameState.opponentPlay && cs.gameState.play) === "false") {
+         await state.listenersRoom(cs.gameState.rtdb);
+      }
       await state.subscribe(async () => {
-         const cs = await state.getState();
+         const cs = (await state.getState()) as any;
          if (cs.gameState.opponentPlay && cs.gameState.play) {
             await this.render();
             Router.go("/play");
          }
       });
       await this.render();
-      const btn = this.querySelector(".btn");
+
+      const btn = this.querySelector(".btn").shadowRoot;
+
       btn?.addEventListener("click", async (e) => {
          e.preventDefault();
          const cs = await state.getState();
 
          if (cs.gameState.name === state.nameTemp) {
             cs.gameState.play = true;
-            await state.pushEstate();
          } else {
             cs.gameState.opponentPlay = true;
-            await state.pushEstate();
          }
+         await state.pushEstate();
 
-         if (cs.gameState.opponentPlay !== cs.gameState.play) {
-            await state.listenersRoom(cs.gameState.rtdb);
+         if (cs.gameState.opponentPlay && cs.gameState.play) {
+            Router.go("/play");
+         } else {
             const instruction = this.querySelector(
                ".instruction"
             ) as HTMLElement;
             instruction.style.display = "none";
             const espera = this.querySelector(".espera") as HTMLElement;
             espera.style.display = "block";
-         } else {
-            Router.go("/play");
          }
       });
+      const csul = await state.getState();
+
+      if (csul.gameState.opponentPlay && csul.gameState.play) {
+         Router.go("/play");
+      }
    }
 
    async render() {

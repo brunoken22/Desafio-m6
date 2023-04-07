@@ -1,10 +1,10 @@
+import { state } from "../../state";
 const perdistes = require("../../img/perdiste.png");
 const ganastes = require("../../img/ganastes.png");
 customElements.define(
    "custom-jugada",
    class extends HTMLElement {
-      constructor() {
-         super();
+      connectedCallback() {
          this.render();
       }
       render() {
@@ -12,19 +12,24 @@ customElements.define(
          const div = document.createElement("div");
          const jugada = this.getAttribute("jugada");
          div.classList.add("imagen");
+
          function eleccion() {
             if (jugada === "empate") {
                return "Empate";
-            } else if (jugada === "true") {
+            } else if (state.nameTemp && jugada === "true") {
+               return "Ganastes";
+            } else if (!state.nameTemp && jugada === "false") {
                return "Ganastes";
             } else {
                return "Perdistes";
             }
          }
+
+         const ganadorFinal = eleccion();
          div.innerHTML = `
-               <h2 class="titulo titulo-${eleccion()}">${eleccion()}</h2>
+               <h2 class="titulo titulo-${ganadorFinal}">${ganadorFinal}</h2>
                <img src="${
-                  jugada == "true" ? ganastes : perdistes
+                  ganadorFinal === "Ganastes" ? ganastes : perdistes
                }" class="${eleccion()}"/>
             `;
 

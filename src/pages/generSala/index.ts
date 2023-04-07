@@ -2,7 +2,6 @@ const papel = require("../../img/papel.png");
 const tijera = require("../../img/tijera.png");
 const piedra = require("../../img/piedra.png");
 const fondo = require("../../img/fondo.png");
-import { async } from "@firebase/util";
 import { Router } from "@vaadin/router";
 import { state } from "../../state";
 class GenerSala extends HTMLElement {

@@ -14,5 +14,5 @@ import "./pages/play";
 import "./pages/result";
 import "./pages/welcome";
 import "./db";
-function main() {}
-main();
+// function main() {}
+// main();

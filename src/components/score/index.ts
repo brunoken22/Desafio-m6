@@ -3,24 +3,11 @@ import { state } from "../../state";
 customElements.define(
    "custom-score",
    class extends HTMLElement {
-      constructor() {
-         super();
-         this.render();
+      async connectedCallback() {
+         await this.render();
       }
       async render() {
-         const ganador = this.getAttribute("ganador") as any;
          const cs = await state.getState();
-         if (ganador == "empate") {
-            let count = 0;
-         } else if (ganador === "true") {
-            let count = 0;
-            cs.score.you = count + 1;
-            await state.pushEstate();
-         } else if (ganador === "false") {
-            let count = 0;
-            cs.score.oponent = count + 1;
-            await state.pushEstate();
-         }
 
          this.classList.add("score");
 

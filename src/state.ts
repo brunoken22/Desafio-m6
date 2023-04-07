@@ -30,8 +30,8 @@ const state = {
       const db = getDatabase(app);
       const refRoom = ref(db, "rooms/" + idRtdb + "/data");
       onValue(refRoom, (snapshot) => {
-         const valor = snapshot.val();
-         this.setState(valor);
+         const newState = snapshot.val();
+         this.setState(newState);
       });
    },
 
@@ -137,9 +137,9 @@ const state = {
       if (gane === computerGane) {
          return "empate";
       } else if (gane) {
-         return true;
+         return "true";
       } else if (computerGane) {
-         return false;
+         return "false";
       }
    },
 
