@@ -7,14 +7,12 @@ type Hands = "tijera" | "piedra" | "papel";
 class Play extends HTMLElement {
    async connectedCallback() {
       const cs = await state.getState();
-      await state.listenersRoom(cs.gameState.rtdb);
-
+      if ((cs.gameState.opponentSelect && cs.gameState.youSelect) === "false") {
+         await state.listenersRoom(cs.gameState.rtdb);
+      }
       await state.subscribe(async () => {
          const cs = await state.getState();
          if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
-            this.render();
-            console.log("hola3");
-
             Router.go("/result");
             return;
          }
@@ -35,7 +33,6 @@ class Play extends HTMLElement {
             await state.pushEstate();
          } else if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
             clearInterval(conteo);
-            console.log("hola2");
             Router.go("/result");
             return;
          }
@@ -71,7 +68,6 @@ class Play extends HTMLElement {
                await state.pushEstate();
             }
             if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
-               console.log("hola1");
                const cs = await state.getState();
 
                const ganador = state.whoWins(

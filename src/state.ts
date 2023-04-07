@@ -1,6 +1,7 @@
 import { API_BASE_URL, ref, onValue, app, getDatabase } from "./db";
 import { Router } from "@vaadin/router";
-const API_URL = "http://localhost:3000";
+const API_URL = process.env.BACKEND_URL || "http://localhost:3000";
+
 type jugada = "papel" | "tijera" | "piedra";
 const state = {
    data: {
@@ -116,7 +117,7 @@ const state = {
       this.setState(cs);
    },
 
-   whoWins(myPlay: jugada, computerPlay: jugada): string | boolean {
+   whoWins(myPlay: jugada, computerPlay: jugada) {
       const ganeConTijera = myPlay == "tijera" && computerPlay == "papel";
       const ganeConPiedra = myPlay == "piedra" && computerPlay == "tijera";
       const ganeConPapel = myPlay == "papel" && computerPlay == "piedra";

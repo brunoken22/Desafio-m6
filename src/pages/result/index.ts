@@ -2,11 +2,14 @@ import { state } from "../../state";
 import { Router } from "@vaadin/router";
 class Result extends HTMLElement {
    async connectedCallback() {
+      // await state.subs
       await this.render();
 
-      const btn = this.querySelector(".btn");
+      const btn = this.querySelector(".btn") as any;
       btn.addEventListener("click", async (e) => {
          e.preventDefault();
+
+         Router.go("/instruction");
          const cs = await state.getState();
          if (state.nameTemp === cs.gameState.name) {
             cs.gameState.youSelect = "";
@@ -15,7 +18,6 @@ class Result extends HTMLElement {
             cs.gameState.opponentSelect = "";
             cs.gameState.opponentPlay = false;
          }
-         Router.go("/instruction");
          await state.pushEstate();
       });
    }

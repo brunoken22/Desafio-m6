@@ -17,7 +17,7 @@ class Title extends HTMLElement {
 
       style.innerHTML = `
             .titulo{
-               font-size:5rem;
+               font-size:4.6rem;
                color: #009048;
             }
             .instruction{

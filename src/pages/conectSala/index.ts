@@ -84,7 +84,7 @@ export class ConnectSala extends HTMLElement {
       }
       @media(min-width:400px){
          .hand{
-            margin-top:9.2rem;
+            margin-top:5.5rem;
             justify-content: space-between;
          }
       }

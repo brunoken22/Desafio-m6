@@ -112,7 +112,6 @@ app.post("/rooms/:rtdbId", (req, res) => {
 
    // if (doc.key === rtdbId) {
    refrtdb.update(req.body).then(() => {
-      console.log("snapshot");
       return res.status(200).json({
          message: "State Enviado",
       });
@@ -120,6 +119,11 @@ app.post("/rooms/:rtdbId", (req, res) => {
    // }
    //    });
    // });
+});
+
+app.use(express.static("dist"));
+app.get("*", (req, res) => {
+   res.sendFile(__dirname + "../dist/index.html");
 });
 
 app.listen(port, () => {

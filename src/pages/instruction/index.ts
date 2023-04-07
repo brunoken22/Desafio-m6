@@ -7,7 +7,8 @@ import { state } from "../../state";
 class Instruction extends HTMLElement {
    async connectedCallback() {
       const cs = await state.getState();
-      if ((cs.gameState.opponentPlay && cs.gameState.play) === "false") {
+
+      if ((cs.gameState.opponentPlay && cs.gameState.play) === false) {
          await state.listenersRoom(cs.gameState.rtdb);
       }
       await state.subscribe(async () => {
@@ -19,7 +20,7 @@ class Instruction extends HTMLElement {
       });
       await this.render();
 
-      const btn = this.querySelector(".btn").shadowRoot;
+      const btn = this.querySelector(".btn") as any;
 
       btn?.addEventListener("click", async (e) => {
          e.preventDefault();
