@@ -25,9 +25,11 @@ class CodigoSala extends HTMLElement {
       document.body.style.backgroundColor = `inherit`;
       this.innerHTML = `
       <custom-title inicio="${"Piedra<br> Papel <span class='span-o'>o</span> Tijera"}"></custom-title>
-      <label for="name" class="label">Tu Nombre</label>
-      <input type="text" class="input" id="name" placeholder="Bruno...">
-      <custom-boton class="btn" title="Empezar"></custom-boton>
+         <div>
+            <label for="name" class="label">Tu Nombre</label>
+            <input type="text" class="input" id="name" placeholder="Bruno...">
+            <custom-boton class="btn" title="Empezar"></custom-boton>
+         </div>
          <div class='hand'>
             <custom-hand direction="${papel}"></custom-hand>
             <custom-hand direction="${tijera}"></custom-hand>
@@ -43,16 +45,15 @@ class CodigoSala extends HTMLElement {
          text-align:center;
          justify-content: space-between;
          height: 100vh;
-   
+
       }
       @media(min-width:400px){
          .contenedor{
             display:flex;
             flex-direction:column;
             width:300px;
-            margin:60px auto;
-            margin-bottom: 0;
-            height: 82vh;
+            height: 100vh;
+            margin:0 auto;
          }
       }
       .label{
@@ -63,9 +64,9 @@ class CodigoSala extends HTMLElement {
          background-color:transparent;
          text-indent:10px;
          font-family: 'Odibee Sans', cursive;
-         font-size:3rem;
-         width:322px;
-         height:87px;
+         font-size:2.2rem;
+         max-width:300px;
+         height:80px;
          border: 5px solid #001997;
          border-radius:10px;
          margin-bottom:10px;
@@ -78,7 +79,6 @@ class CodigoSala extends HTMLElement {
       .hand{
          display:flex;
          justify-content: space-around;
-         margin-top:2.6rem;
       }
       @media(min-width:400px){
          .hand{

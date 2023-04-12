@@ -12,8 +12,10 @@ export class Welcome extends HTMLElement {
       div.classList.add("contenedor");
       div.innerHTML = `
       <custom-title inicio="${"Piedra<br> Papel <span class='span-o'>o</span> Tijera"}"></custom-title>
-      <custom-boton class="btn" title="Nuevo Juego"></custom-boton>
-      <custom-boton id="roomExist" class="btn" title="Ingresar a una sala"></custom-boton>
+      <div class="botones">
+         <custom-boton class="btn" title="Nuevo Juego"></custom-boton>
+         <custom-boton id="roomExist" class="btn" title="Ingresar a una sala"></custom-boton>
+      </div>
       <div class='hand'>
          <custom-hand direction="${papel}"></custom-hand>
          <custom-hand direction="${tijera}"></custom-hand>
@@ -27,7 +29,6 @@ export class Welcome extends HTMLElement {
          text-align:center;
          justify-content: space-between;
          height: 100vh;
-
       }
       @media(min-width:400px){
          .contenedor{
@@ -36,17 +37,15 @@ export class Welcome extends HTMLElement {
             width:300px;
             margin:0px auto;
             margin-bottom: 0;
-            height: 82vh;
+            height: 100vh;
          }
       }
       .hand{
          display:flex;
          justify-content: space-around;
-         margin-top:3rem;
       }
       @media(min-width:400px){
          .hand{
-            margin-top:5.5rem;
             justify-content: space-between;
          }
       }

@@ -30,7 +30,7 @@ customElements.define(
                <h2 class="titulo titulo-${ganadorFinal}">${ganadorFinal}</h2>
                <img src="${
                   ganadorFinal === "Ganastes" ? ganastes : perdistes
-               }" class="${eleccion()}"/>
+               }" class="${eleccion()} estrella"/>
             `;
 
          const style = document.createElement("style");
@@ -38,10 +38,17 @@ customElements.define(
          style.innerHTML = `
                .titulo{
                   color: #fff;
-                  font-size: 3.3rem;
+                  font-size: 2.8rem;
                   position: absolute;
-                  top: 70px;
+                  top: 36px;
                   right: auto;
+               }
+               .estrella{
+                  width:200px
+               }
+               @media(min-width:400px){
+                  img{
+                  }
                }
                .imagen{
                   display: flex;

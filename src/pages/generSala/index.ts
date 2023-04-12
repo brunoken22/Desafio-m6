@@ -80,7 +80,9 @@ class GenerSala extends HTMLElement {
       display:flex;
       justify-content:space-between;
       align-items:center;  
-      font-size:2rem;
+      font-size:1.5rem;
+      padding:5px 10px;
+   
    }
 
    .codigo-juego{

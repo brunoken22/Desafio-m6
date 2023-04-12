@@ -29,9 +29,11 @@ export class ConnectSala extends HTMLElement {
       this.classList.add("contenedor");
       this.innerHTML = `
       <custom-title inicio="${"Piedra<br> Papel <span class='span-o'>o</span> Tijera"}"></custom-title>
-      <input type="text" class="id input" placeholder="Ingrese el ID">
-      <input type="text" class="name input" placeholder="Tu nombre ...">
-      <custom-boton id="roomExist" class="btn" title="Ingresar"></custom-boton>
+      <div>
+         <input type="text" class="id input" placeholder="Ingrese el ID">
+         <input type="text" class="name input" placeholder="Tu nombre ...">
+         <custom-boton id="roomExist" class="btn" title="Ingresar"></custom-boton>
+      </div>
       <div class='hand'>
          <custom-hand direction="${papel}"></custom-hand>
          <custom-hand direction="${tijera}"></custom-hand>
@@ -55,7 +57,8 @@ export class ConnectSala extends HTMLElement {
             width:300px;
             margin:0px auto;
             margin-bottom: 0;
-            height: 82vh;
+            height: 100vh;
+
          }
       }
       .name{
@@ -64,9 +67,9 @@ export class ConnectSala extends HTMLElement {
          background-color:transparent;
          text-indent:10px;
          font-family: 'Odibee Sans', cursive;
-         font-size:3rem;
-         width:322px;
-         height:87px;
+         font-size:2.2rem;
+         max-width:300px;
+         height:70px;
          border: 5px solid #001997;
          border-radius:10px;
          margin-bottom:10px;
@@ -79,11 +82,9 @@ export class ConnectSala extends HTMLElement {
       .hand{
          display:flex;
          justify-content: space-around;
-         margin-top:3rem;
       }
       @media(min-width:400px){
          .hand{
-            margin-top:5.5rem;
             justify-content: space-between;
          }
       }

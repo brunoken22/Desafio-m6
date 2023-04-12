@@ -41,7 +41,7 @@ class Countdown extends HTMLElement {
               font-size: 72px;
               text-align: center;
               color: #000;
-              top:35%;
+              top:32%;
             }
             
             .svg {  

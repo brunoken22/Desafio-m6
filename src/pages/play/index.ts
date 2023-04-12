@@ -9,8 +9,15 @@ class Play extends HTMLElement {
          const cs = await state.getState();
 
          if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
-            Router.go("/result");
+            const cs = await state.getState();
+            if (state.nameTemp === cs.gameState.name) {
+               cs.gameState.play = false;
+            } else {
+               cs.gameState.opponentPlay = false;
+            }
+            await state.pushEstate();
             await this.render();
+            Router.go("/result");
          }
       });
       await this.render();
@@ -26,7 +33,13 @@ class Play extends HTMLElement {
             Router.go("/instruction");
          } else if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
             clearInterval(conteo);
-
+            const cs = await state.getState();
+            if (state.nameTemp === cs.gameState.name) {
+               cs.gameState.play = false;
+            } else {
+               cs.gameState.opponentPlay = false;
+            }
+            await state.pushEstate();
             Router.go("/result");
          }
       }, 1000);

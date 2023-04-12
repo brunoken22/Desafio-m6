@@ -17,11 +17,14 @@ class Title extends HTMLElement {
 
       style.innerHTML = `
             .titulo{
-               font-size:4.6rem;
+               font-size:3.5rem;
                color: #009048;
+               margin-bottom:0;
+               margin-top:40px;
             }
             .instruction{
-               font-size:3rem;
+               padding:0 10px;
+               font-size:2.6rem;
             }
             .span-o{
                opacity:50%;

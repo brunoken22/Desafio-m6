@@ -42,7 +42,7 @@ class Result extends HTMLElement {
          text-align:center;
          justify-content: space-between;
          height: 100vh;
-         margin:20px auto;
+         margin:0 auto;
          margin-bottom: 0;
       }
       @media(min-width:400px){
@@ -50,7 +50,7 @@ class Result extends HTMLElement {
             display:flex;
             flex-direction:column;
             width:300px;
-            height: 97.5vh;
+            height: 100vh;
          }
       }
       `;
@@ -71,13 +71,6 @@ class Result extends HTMLElement {
       }
       const btn = this.querySelector(".btn") as HTMLButtonElement;
       btn.addEventListener("click", async () => {
-         const cs = await state.getState();
-         if (state.nameTemp === cs.gameState.name) {
-            cs.gameState.play = false;
-         } else {
-            cs.gameState.opponentPlay = false;
-         }
-         await state.pushEstate();
          Router.go("/instruction");
       });
    }

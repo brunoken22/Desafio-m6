@@ -17,9 +17,9 @@ class Boton extends HTMLElement {
       style.innerHTML = `
             .btn{
                font-family: 'Odibee Sans', cursive;
-               font-size:3rem;
-               width:322px;
-               height:87px;
+               font-size:2.5rem;
+               width:300px;
+               height:80px;
                color:#fff;
                background-color:#006CFC;
                border: 10px solid #001997;
@@ -33,7 +33,7 @@ class Boton extends HTMLElement {
                }
             }
             .true{
-               height:120px;
+               height:100px;
             }
          `;
       shadow.appendChild(div);

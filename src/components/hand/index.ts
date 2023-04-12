@@ -11,11 +11,14 @@ class Hand extends HTMLElement {
       const clase = this.getAttribute("class");
 
       div.innerHTML = `
-            <img src="${valor}" class="${clase}" alt="hands">
+            <img src="${valor}" class="${clase}" alt="hands" >
          `;
 
       style.innerHTML = `
-      
+      .${clase}{
+         max-width:45px;
+         height:90px;
+      }
          `;
 
       shadow.appendChild(div);

@@ -114,6 +114,8 @@ class Instruction extends HTMLElement {
       justify-content:space-between;
       align-items:center;  
       font-size:2rem;
+      padding:5px 10px;
+
    }
 
    .codigo-juego{
@@ -126,16 +128,13 @@ class Instruction extends HTMLElement {
       
    }
    .instruction{
-      margin-top:5.5rem;
    }
    .hand{
       display:flex;
       justify-content: space-around;
-      margin-top:2.6rem;
    }
    @media(min-width:400px){
       .hand{
-         margin-top:4rem;
 
          justify-content: space-between;
       }
