@@ -105,7 +105,7 @@ class Instruction extends HTMLElement {
          width:500px;
          margin:0px auto;
          margin-bottom: 0;
-         height: 100vh;
+         height: 93vh;
          padding-top:20px;
       }
    }

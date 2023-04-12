@@ -28,7 +28,7 @@ export class Welcome extends HTMLElement {
          flex-direction:column;
          text-align:center;
          justify-content: space-between;
-         height: 93vh;
+         height: 100vh;
       }
       @media(min-width:400px){
          .contenedor{

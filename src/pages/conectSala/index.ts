@@ -57,7 +57,7 @@ export class ConnectSala extends HTMLElement {
             width:300px;
             margin:0px auto;
             margin-bottom: 0;
-            height: 100vh;
+            height: 93vh;
 
          }
       }
