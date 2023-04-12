@@ -3,70 +3,63 @@ const tijera = require("../../img/tijera.png");
 const piedra = require("../../img/piedra.png");
 import { Router } from "@vaadin/router";
 import { state } from "../../state";
-type Hands = "tijera" | "piedra" | "papel";
 class Play extends HTMLElement {
    async connectedCallback() {
-      const cs = await state.getState();
-      if ((cs.gameState.opponentSelect && cs.gameState.youSelect) === "false") {
-         await state.listenersRoom(cs.gameState.rtdb);
-      }
       await state.subscribe(async () => {
          const cs = await state.getState();
+
          if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
             Router.go("/result");
-            return;
+            await this.render();
          }
       });
-      this.render();
+      await this.render();
+
       let num = 5;
       const conteo = setInterval(async () => {
          num--;
          const cs = await state.getState();
          if (num < 1) {
             clearInterval(conteo);
-            Router.go("/instruction");
-            const cs = await state.getState();
-            cs.gameState.play = false;
-            cs.gameState.youSelect = "";
-            cs.gameState.opponentPlay = false;
-            cs.gameState.opponentSelect = "";
+
             await state.pushEstate();
+            Router.go("/instruction");
          } else if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
             clearInterval(conteo);
+
             Router.go("/result");
-            return;
          }
       }, 1000);
-      await this.movies();
    }
    async movies() {
       const hands = this.querySelectorAll(".selec") as any;
       for (let el of hands) {
-         el.addEventListener("click", async (e: any) => {
-            e.preventDefault();
-
-            // const countdown = this.querySelector(
-            //    "custom-countdown"
-            // ) as HTMLElement;
-            // countdown.style.display = "none";
+         el.addEventListener("click", async (e) => {
+            const countdown = this.querySelector(
+               "custom-countdown"
+            ) as HTMLElement;
+            countdown.style.display = "none";
 
             for (let selec of hands) {
                if (selec.getAttribute("id") !== el.getAttribute("id")) {
                   selec.remove();
                }
             }
-            (el as any).style.cssText =
-               "margin-top:-70px;opacity:100%;justify-content: center;pointer-events: none;cursor: pointer";
-
+            const handss = this.querySelector(".hands") as any;
+            const handsss = e.target.shadowRoot
+               .querySelector("div")
+               .querySelector("img");
+            handsss.style.width = "100px";
+            (el as any).style.cssText = " margin-top:-100px;opacity:1;";
+            handss.style.justifyContent = "center";
             const cs = await state.getState();
 
             if (state.nameTemp === cs.gameState.name) {
                cs.gameState.youSelect = (e.target as any).id;
-               await state.pushEstate();
             } else {
                cs.gameState.opponentSelect = (e.target as any).id;
-               await state.pushEstate();
             }
+            await state.pushEstate();
             if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
                const cs = await state.getState();
 
@@ -77,29 +70,27 @@ class Play extends HTMLElement {
 
                if (ganador === "true") {
                   cs.score.you++;
-                  await state.pushEstate();
                } else if (ganador === "false") {
                   cs.score.oponent++;
-                  await state.pushEstate();
                }
-               // Router.go("/result");
-               // return;
+
+               await state.pushEstate();
             }
          });
       }
    }
 
-   // <custom-countdown class="countdown"></custom-countdown>
-   render() {
+   async render() {
       const style = document.createElement("style");
       this.classList.add("contenedor");
 
       this.innerHTML = `
       <div class="oponent-hands">
-         <custom-hand id="1" class="oponent-papel select-oponet" direction="${papel}" style="display:none" type="papel"></custom-hand>
-         <custom-hand id="2" class="oponent-tijera select-oponet" type="tijera" direction="${tijera}" style="display:none"></custom-hand>
-         <custom-hand id="3" class="oponent-piedra select-oponet" direction="${piedra}" type="piedra"  style="display:none"></custom-hand>
+      <custom-hand id="1" class="oponent-papel select-oponet" direction="${papel}" style="display:none" type="papel"></custom-hand>
+      <custom-hand id="2" class="oponent-tijera select-oponet" type="tijera" direction="${tijera}" style="display:none"></custom-hand>
+      <custom-hand id="3" class="oponent-piedra select-oponet" direction="${piedra}" type="piedra"  style="display:none"></custom-hand>
       </div>
+      <custom-countdown class="countdown"></custom-countdown>
       <div class='hands'>
          <a href="#" id="papel" class="papel selec"><custom-hand id='papel' direction="${papel}"></custom-hand></a>
          <a href="#" id="tijera" class="tijera selec"><custom-hand id='tijera' direction="${tijera}"></custom-hand></a>
@@ -108,6 +99,9 @@ class Play extends HTMLElement {
       `;
 
       style.innerHTML = `
+      body{
+         opacity:1 !important;
+      }
       .contenedor{
          display:flex;
          flex-direction:column;
@@ -137,12 +131,13 @@ class Play extends HTMLElement {
       }
       @media(min-width:400px){
          .hands{
-            justify-content: space-center;
+            justify-content: space-between;
          }
          
       }
+    
       .piedra,.papel,.tijera{
-         opacity:50%;
+         opacity:0.6;
       }
       .piedra:hover{
          margin-top:-50px;
@@ -159,6 +154,8 @@ class Play extends HTMLElement {
       }
       `;
       this.appendChild(style);
+
+      await this.movies();
    }
 }
 customElements.define("page-play", Play);

@@ -11,9 +11,10 @@ class CodigoSala extends HTMLElement {
       btn?.addEventListener("click", async () => {
          const name = (this.querySelector(".input") as HTMLInputElement).value;
          state.nameTemp = name;
+         document.body.style.opacity = "0.5 ";
          await state.setName(name);
          await state.askNewRoom();
-         await state.pushEstate();
+         await state.pushEstate(() => {});
          Router.go("/generSala");
       });
    }

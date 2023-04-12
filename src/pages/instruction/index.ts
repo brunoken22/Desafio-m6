@@ -4,14 +4,12 @@ const piedra = require("../../img/piedra.png");
 const fondo = require("../../img/fondo.png");
 import { Router } from "@vaadin/router";
 import { state } from "../../state";
+import { log } from "console";
+const hands = ["papel", "piedra", "tijera"];
 class Instruction extends HTMLElement {
    async connectedCallback() {
-      const cs = await state.getState();
-
-      if ((cs.gameState.opponentPlay && cs.gameState.play) === false) {
-         await state.listenersRoom(cs.gameState.rtdb);
-      }
       await state.subscribe(async () => {
+         console.log("subscribe instru");
          const cs = (await state.getState()) as any;
          if (cs.gameState.opponentPlay && cs.gameState.play) {
             await this.render();
@@ -22,15 +20,21 @@ class Instruction extends HTMLElement {
 
       const btn = this.querySelector(".btn") as any;
 
-      btn?.addEventListener("click", async (e) => {
-         e.preventDefault();
+      btn?.addEventListener("click", async () => {
          const cs = await state.getState();
 
          if (cs.gameState.name === state.nameTemp) {
             cs.gameState.play = true;
+            if (hands.includes(cs.gameState.youSelect)) {
+               cs.gameState.youSelect = "";
+            }
          } else {
             cs.gameState.opponentPlay = true;
+            if (hands.includes(cs.gameState.opponentSelect)) {
+               cs.gameState.opponentSelect = "";
+            }
          }
+
          await state.pushEstate();
 
          if (cs.gameState.opponentPlay && cs.gameState.play) {
@@ -44,11 +48,6 @@ class Instruction extends HTMLElement {
             espera.style.display = "block";
          }
       });
-      const csul = await state.getState();
-
-      if (csul.gameState.opponentPlay && csul.gameState.play) {
-         Router.go("/play");
-      }
    }
 
    async render() {
@@ -74,7 +73,7 @@ class Instruction extends HTMLElement {
       </div>
    </div>
       <div class="instruction">
-         <custom-title inicio="Presioná jugar y elegí: piedra, papel o tijera antes de que pasen los 3 segundos."></custom-title>
+         <custom-title inicio="Presioná jugar y elegí: piedra, papel o tijera antes de que pasen los 5 segundos."></custom-title>
          <custom-boton class="btn" title="¡Jugar!"></custom-boton>
       </div>
       <div class="espera" style="display:none">
@@ -88,7 +87,9 @@ class Instruction extends HTMLElement {
     `;
 
       style.innerHTML = `
-   
+      body{
+         opacity:1 !important;
+      }
    .contenedor{
       display:flex;
       flex-direction:column;

@@ -1,6 +1,5 @@
-import { API_BASE_URL, ref, onValue, app, getDatabase } from "./db";
-import { Router } from "@vaadin/router";
-const API_URL = process.env.BACKEND_URL || "http://localhost:3000";
+import { ref, onValue, app, getDatabase, child, get, update } from "./db";
+const API_URL = "http://localhost:3000";
 
 type jugada = "papel" | "tijera" | "piedra";
 const state = {
@@ -10,7 +9,7 @@ const state = {
          userId: "",
          roomId: "",
          rtdb: "",
-         online: false,
+         youConect: false,
          play: false,
          youSelect: "",
          opponentName: "",
@@ -18,7 +17,6 @@ const state = {
          opponentConect: false,
          opponentSelect: "",
       },
-      gameReady: false,
       winner: "",
       score: {
          you: 0,
@@ -26,18 +24,28 @@ const state = {
       },
    },
    nameTemp: "",
-   listeners: [],
+   listeners: () => {},
    async listenersRoom(idRtdb) {
       const db = getDatabase(app);
       const refRoom = ref(db, "rooms/" + idRtdb + "/data");
       onValue(refRoom, (snapshot) => {
-         const newState = snapshot.val();
-         this.setState(newState);
+         if (snapshot.exists()) {
+            const newState = snapshot.val();
+            this.setState(newState);
+         }
       });
    },
+   async obtenerGameState(rtdb) {
+      const dbRef = ref(getDatabase());
+      let newState = await get(child(dbRef, `rooms/${rtdb}/data`));
 
+      if (newState.exists()) {
+         const data = newState.val();
+         this.setState(data);
+      }
+   },
    //Enviar datos para la rtdb
-   async pushEstate() {
+   async pushEstate(cb?) {
       const cs = await this.getState();
 
       await fetch(API_URL + "/rooms/" + cs.gameState.rtdb, {
@@ -47,6 +55,9 @@ const state = {
          },
          body: JSON.stringify(cs),
       });
+      if (cb) {
+         cb();
+      }
    },
 
    async getState() {
@@ -55,15 +66,24 @@ const state = {
    },
    setState(newState) {
       this.data = newState;
-      for (let cb of this.listeners) {
-         cb();
-      }
+      this.listeners();
    },
-
+   async deleteSelect() {
+      const cs = await state.getState();
+      if (state.nameTemp === cs.gameState.name) {
+         cs.gameState.play = false;
+         cs.gameState.youSelect = "";
+      } else {
+         cs.gameState.opponentPlay = false;
+         cs.gameState.opponentSelect = "";
+      }
+      await this.pushEstate();
+   },
    //AGREGGA TU NOMBRE AL STATE
    async setName(name: string) {
       const { gameState } = await this.getState();
       gameState.name = name;
+      gameState.youConect = true;
    },
 
    // crea un usuario en fireStore
@@ -145,7 +165,7 @@ const state = {
    },
 
    async subscribe(cb) {
-      this.listeners.push(cb);
+      this.listeners = cb;
       // console.log("El state a cambiado", this.data);
    },
 };

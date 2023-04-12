@@ -6,7 +6,7 @@ class Boton extends HTMLElement {
    render() {
       const shadow = this.attachShadow({ mode: "open" });
       const div = document.createElement("div");
-      const title = this.getAttribute("title");
+      const title = this.getAttribute("title") as any;
 
       div.innerHTML = `
             <button class="btn ${
@@ -29,7 +29,7 @@ class Boton extends HTMLElement {
             @media(min-width:400px){
                .btn{
                   width:100%;
-
+                  cursor:pointer;
                }
             }
             .true{

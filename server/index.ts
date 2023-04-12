@@ -120,6 +120,16 @@ app.post("/rooms/:rtdbId", (req, res) => {
    //    });
    // });
 });
+app.post("/delete/:rtdbId", (req, res) => {
+   const { rtdbId } = req.params;
+   const refrtdb = rtdb.ref("/rooms/" + rtdbId + "/data");
+
+   refrtdb.update(req.body).then(() => {
+      return res.status(200).json({
+         message: "State Enviado",
+      });
+   });
+});
 
 app.use(express.static("dist"));
 app.get("*", (req, res) => {

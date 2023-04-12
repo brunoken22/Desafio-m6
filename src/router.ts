@@ -10,4 +10,5 @@ router.setRoutes([
    { path: "/instruction", component: "page-instruction" },
    { path: "/play", component: "page-play" },
    { path: "/result", component: "page-result" },
+   // { path: "/instruction2", component: "page-instructionn" },
 ]);

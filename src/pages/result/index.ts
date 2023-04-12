@@ -1,25 +1,12 @@
 import { state } from "../../state";
 import { Router } from "@vaadin/router";
+const hands = ["tijera", "piedra", "papel"];
 class Result extends HTMLElement {
    async connectedCallback() {
-      // await state.subs
-      await this.render();
-
-      const btn = this.querySelector(".btn") as any;
-      btn.addEventListener("click", async (e) => {
-         e.preventDefault();
-
-         Router.go("/instruction");
-         const cs = await state.getState();
-         if (state.nameTemp === cs.gameState.name) {
-            cs.gameState.youSelect = "";
-            cs.gameState.play = false;
-         } else {
-            cs.gameState.opponentSelect = "";
-            cs.gameState.opponentPlay = false;
-         }
-         await state.pushEstate();
+      await state.subscribe(async () => {
+         await this.render();
       });
+      await this.render();
    }
    async render() {
       const cs = await state.getState();
@@ -46,7 +33,7 @@ class Result extends HTMLElement {
       const style = document.createElement("style");
       style.innerHTML = `
       body{
-         opacity:90%;
+         opacity:1 !important;
       }
 
       .contenedor{
@@ -67,6 +54,7 @@ class Result extends HTMLElement {
          }
       }
       `;
+      this.appendChild(style);
 
       if (ganador === "empate") {
          document.body.style.backgroundColor = "#4AC0FF";
@@ -81,8 +69,17 @@ class Result extends HTMLElement {
          document.body.style.backgroundColor = "#894949";
          document.body.style.backgroundImage = "none";
       }
-
-      this.appendChild(style);
+      const btn = this.querySelector(".btn") as HTMLButtonElement;
+      btn.addEventListener("click", async () => {
+         const cs = await state.getState();
+         if (state.nameTemp === cs.gameState.name) {
+            cs.gameState.play = false;
+         } else {
+            cs.gameState.opponentPlay = false;
+         }
+         await state.pushEstate();
+         Router.go("/instruction");
+      });
    }
 }
 

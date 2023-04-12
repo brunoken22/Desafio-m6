@@ -1,5 +1,12 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue } from "firebase/database";
+import {
+   getDatabase,
+   ref,
+   onValue,
+   child,
+   get,
+   update,
+} from "firebase/database";
 
 let API_BASE_URL: "http://localhost:3000";
 const firebaseConfig = {
@@ -14,4 +21,4 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 
-export { API_BASE_URL, getDatabase, ref, onValue, app };
+export { API_BASE_URL, getDatabase, ref, onValue, app, child, get, update };

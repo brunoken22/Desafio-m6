@@ -9,20 +9,19 @@ export class ConnectSala extends HTMLElement {
 
       const btn = this.querySelector(".btn");
       btn?.addEventListener("click", async (e) => {
-         e.preventDefault();
+         document.body.style.opacity = "0.5 ";
+
          const id = this.querySelector(".id") as HTMLInputElement;
-         await state.listenersRoom(id.value);
-         setTimeout(async () => {
-            const cs = await state.getState();
-            const name = this.querySelector(".name") as HTMLInputElement;
-            cs.gameState.rtdb = id.value;
-            cs.gameState.opponentName = name.value;
-            cs.gameState.opponentConect = true;
+         await state.obtenerGameState(id.value);
+         const cs = await state.getState();
+         const name = this.querySelector(".name") as HTMLInputElement;
+         cs.gameState.rtdb = id.value;
+         cs.gameState.opponentName = name.value;
+         cs.gameState.opponentConect = true;
 
-            await state.pushEstate();
+         await state.pushEstate();
 
-            Router.go("/generSala");
-         }, 2000);
+         Router.go("/generSala");
       });
    }
    async render() {

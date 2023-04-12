@@ -8,10 +8,10 @@ class GenerSala extends HTMLElement {
    async connectedCallback() {
       await state.subscribe(async () => {
          const cs = await state.getState();
-
-         if (cs.gameState.opponentConect) {
-            await this.render();
+         if (cs.gameState.opponentConect && cs.gameState.youConect) {
+            console.log("subscrito gener");
             Router.go("/instruction");
+            return false;
          }
       });
       await this.render();
@@ -54,7 +54,9 @@ class GenerSala extends HTMLElement {
    `;
 
       style.innerHTML = `
-   
+   body{
+      opacity:1 !important;
+   }
    .contenedor{
       display:flex;
       flex-direction:column;

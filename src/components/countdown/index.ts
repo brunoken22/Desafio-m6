@@ -40,8 +40,8 @@ class Countdown extends HTMLElement {
               font-weight: 400;
               font-size: 72px;
               text-align: center;
-              font-family: 'Faster One', cursive;
               color: #000;
+              top:35%;
             }
             
             .svg {  
