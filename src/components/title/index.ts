@@ -24,7 +24,7 @@ class Title extends HTMLElement {
             }
             .instruction{
                padding:0 10px;
-               font-size:2.6rem;
+               font-size:2.2rem;
             }
             .span-o{
                opacity:50%;

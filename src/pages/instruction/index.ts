@@ -109,11 +109,14 @@ class Instruction extends HTMLElement {
          padding-top:20px;
       }
    }
+   p{
+
+   }
    .detalles{
       display:flex;
       justify-content:space-between;
       align-items:center;  
-      font-size:2rem;
+      font-size:1.3rem;
       padding:5px 10px;
 
    }
