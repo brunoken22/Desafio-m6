@@ -50,7 +50,7 @@ class Result extends HTMLElement {
             display:flex;
             flex-direction:column;
             width:300px;
-            height: 93vh;
+            height: 100vh;
          }
       }
       `;

@@ -48,6 +48,10 @@ class Play extends HTMLElement {
       const hands = this.querySelectorAll(".selec") as any;
       for (let el of hands) {
          el.addEventListener("click", async (e) => {
+            this.style.opacity = "0.4";
+
+            (document.querySelector(".load") as HTMLDivElement).style.display =
+               "flex";
             const countdown = this.querySelector(
                "custom-countdown"
             ) as HTMLElement;
@@ -130,7 +134,7 @@ class Play extends HTMLElement {
             width:300px;
             margin:0px auto;
             margin-bottom: 0;
-            height: 93vh;
+            height: 100vh;
          }
       }
       .oponent-hands{

@@ -54,8 +54,7 @@ class Instruction extends HTMLElement {
       const cs = await state.getState();
       const style = document.createElement("style");
       this.classList.add("contenedor");
-      document.body.style.backgroundImage = `url(${fondo})`;
-      document.body.style.backgroundColor = `inherit`;
+
       //"Presioná jugar y elegí: piedra, papel o tijera antes de que pasen los 5 segundos.
       this.innerHTML = `
       <div class="detalles">
@@ -105,7 +104,7 @@ class Instruction extends HTMLElement {
          width:500px;
          margin:0px auto;
          margin-bottom: 0;
-         height: 93vh;
+         height: 100vh;
          padding-top:20px;
       }
    }

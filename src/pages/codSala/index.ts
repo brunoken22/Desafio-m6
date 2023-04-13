@@ -9,23 +9,23 @@ class CodigoSala extends HTMLElement {
       this.render();
       const btn = this.querySelector(".btn");
       btn?.addEventListener("click", async () => {
+         this.style.opacity = "0.2";
+
+         (document.querySelector(".load") as HTMLDivElement).style.display =
+            "flex";
          const name = (this.querySelector(".input") as HTMLInputElement).value;
          state.nameTemp = name;
-         document.body.style.opacity = "0.5 ";
          await state.setName(name);
          await state.askNewRoom();
-         await state.pushEstate(() => {});
          Router.go("/generSala");
       });
    }
    render() {
       const style = document.createElement("style");
       this.classList.add("contenedor");
-      document.body.style.backgroundImage = `url(${fondo})`;
-      document.body.style.backgroundColor = `inherit`;
       this.innerHTML = `
-      <custom-title inicio="${"Piedra<br> Papel <span class='span-o'>o</span> Tijera"}"></custom-title>
-         <div>
+         <custom-title inicio="${"Piedra<br> Papel <span class='span-o'>o</span> Tijera"}"></custom-title>
+         <div class="name">
             <label for="name" class="label">Tu Nombre</label>
             <input type="text" class="input" id="name" placeholder="Bruno...">
             <custom-boton class="btn" title="Empezar"></custom-boton>
@@ -47,16 +47,22 @@ class CodigoSala extends HTMLElement {
          height: 100vh;
 
       }
-      @media(min-width:400px){
+      @media(min-width:325px){
          .contenedor{
             display:flex;
             flex-direction:column;
             width:300px;
-            height: 93vh;
+            height: 100vh;
             margin:0 auto;
          }
       }
+    
+   
+      .name{
+         margin:0 10px;
+      }
       .label{
+         width:100%;
          text-align:start;
          font-size:2rem;
       }
@@ -64,14 +70,14 @@ class CodigoSala extends HTMLElement {
          background-color:transparent;
          text-indent:10px;
          font-family: 'Odibee Sans', cursive;
-         font-size:2.2rem;
-         max-width:300px;
-         height:80px;
+         font-size:2rem;
+         width:100%;
+         height:60px;
          border: 5px solid #001997;
          border-radius:10px;
          margin-bottom:10px;
       }
-      @media(min-width:400px){
+      @media(min-width:325px){
          .input{
             width:100%;
          }
@@ -80,7 +86,7 @@ class CodigoSala extends HTMLElement {
          display:flex;
          justify-content: space-around;
       }
-      @media(min-width:400px){
+      @media(min-width:325px){
          .hand{
             justify-content: space-between;
          }

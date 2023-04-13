@@ -17,23 +17,24 @@ class Boton extends HTMLElement {
       style.innerHTML = `
             .btn{
                font-family: 'Odibee Sans', cursive;
-               font-size:2.5rem;
-               width:300px;
-               height:80px;
+               font-size:2.3rem;
+               height:70px;
                color:#fff;
                background-color:#006CFC;
                border: 10px solid #001997;
                border-radius:10px;
+               cursor:pointer;
                margin-bottom:10px;
-            }
-            @media(min-width:400px){
-               .btn{
-                  width:100%;
-                  cursor:pointer;
-               }
+               width:100%;
+               
             }
             .true{
                height:100px;
+            }
+            @media(min-width:400px){
+               .true{
+                  height:85px;
+               }
             }
          `;
       shadow.appendChild(div);

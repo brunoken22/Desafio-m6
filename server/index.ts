@@ -131,10 +131,10 @@ app.post("/delete/:rtdbId", (req, res) => {
    });
 });
 
-app.use(express.static("dist"));
-app.get("*", (req, res) => {
-   res.sendFile(__dirname + "../dist/index.html");
-});
+// app.use(express.static("dist"));
+// app.get("*", (req, res) => {
+//    res.sendFile(__dirname + "../dist/index.html");
+// });
 
 app.listen(port, () => {
    console.log("http://localhost:" + port);

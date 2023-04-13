@@ -124,6 +124,7 @@ const state = {
       await this.getExistingRoomId(id);
       cs.gameState.roomId = id;
       this.setState(cs);
+      await this.pushEstate();
    },
 
    // obtiene el id de la rtdb y lo guarda en el state

@@ -6,12 +6,13 @@ import { Router } from "@vaadin/router";
 import { state } from "../../state";
 class GenerSala extends HTMLElement {
    async connectedCallback() {
+      (document.querySelector(".load") as HTMLDivElement).style.display =
+         "none";
       await state.subscribe(async () => {
          const cs = await state.getState();
          if (cs.gameState.opponentConect && cs.gameState.youConect) {
             console.log("subscrito gener");
             Router.go("/instruction");
-            return false;
          }
       });
       await this.render();
@@ -72,7 +73,7 @@ class GenerSala extends HTMLElement {
          width:500px;
          margin:0px auto;
          margin-bottom: 0;
-         height: 93vh;
+         height: 100vh;
          padding-top:20px;
       }
    }

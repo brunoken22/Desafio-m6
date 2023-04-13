@@ -9,7 +9,10 @@ export class ConnectSala extends HTMLElement {
 
       const btn = this.querySelector(".btn");
       btn?.addEventListener("click", async (e) => {
-         document.body.style.opacity = "0.5 ";
+         this.style.opacity = "0.2";
+
+         (document.querySelector(".load") as HTMLDivElement).style.display =
+            "flex";
 
          const id = this.querySelector(".id") as HTMLInputElement;
          await state.obtenerGameState(id.value);
@@ -29,7 +32,7 @@ export class ConnectSala extends HTMLElement {
       this.classList.add("contenedor");
       this.innerHTML = `
       <custom-title inicio="${"Piedra<br> Papel <span class='span-o'>o</span> Tijera"}"></custom-title>
-      <div>
+      <div class="idopo">
          <input type="text" class="id input" placeholder="Ingrese el ID">
          <input type="text" class="name input" placeholder="Tu nombre ...">
          <custom-boton id="roomExist" class="btn" title="Ingresar"></custom-boton>
@@ -50,31 +53,32 @@ export class ConnectSala extends HTMLElement {
          height: 100vh;
 
       }
-      @media(min-width:400px){
+      @media(min-width:325px){
          .contenedor{
             display:flex;
             flex-direction:column;
             width:300px;
             margin:0px auto;
             margin-bottom: 0;
-            height: 93vh;
+            height: 100vh;
 
          }
       }
-      .name{
+      .idopo{
+         margin:0 10px;
       }
       .input{
          background-color:transparent;
          text-indent:10px;
          font-family: 'Odibee Sans', cursive;
-         font-size:2.2rem;
-         max-width:300px;
-         height:70px;
+         font-size:2rem;
+         width:100%;
+         height:60px;
          border: 5px solid #001997;
          border-radius:10px;
          margin-bottom:10px;
       }
-      @media(min-width:400px){
+      @media(min-width:325px){
          .input{
             width:100%;
          }
@@ -83,7 +87,7 @@ export class ConnectSala extends HTMLElement {
          display:flex;
          justify-content: space-around;
       }
-      @media(min-width:400px){
+      @media(min-width:325px){
          .hand{
             justify-content: space-between;
          }

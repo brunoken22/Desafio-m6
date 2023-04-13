@@ -29,16 +29,21 @@ export class Welcome extends HTMLElement {
          text-align:center;
          justify-content: space-between;
          height: 100vh;
+         margin:0px auto;
+
       }
-      @media(min-width:400px){
+      @media(min-width:325px){
          .contenedor{
             display:flex;
             flex-direction:column;
             width:300px;
             margin:0px auto;
             margin-bottom: 0;
-            height: 93vh;
+            height: 100vh;
          }
+      }
+      .botones{
+         margin:0 10px
       }
       .hand{
          display:flex;
