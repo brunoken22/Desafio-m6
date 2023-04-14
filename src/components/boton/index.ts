@@ -24,8 +24,7 @@ class Boton extends HTMLElement {
                border: 10px solid #001997;
                border-radius:10px;
                cursor:pointer;
-               margin-right:20px ;
-               margin-left:20px ;
+
                width:100%;
               
             }

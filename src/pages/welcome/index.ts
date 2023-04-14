@@ -43,7 +43,10 @@ export class Welcome extends HTMLElement {
          }
       }
       .botones{
-         margin:0 10px
+         flex-direction: column;
+         margin: 0 10px;
+         row-gap: 5px;
+         display: flex
       }
       .hand{
          display:flex;
