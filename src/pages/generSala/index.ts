@@ -6,8 +6,6 @@ import { Router } from "@vaadin/router";
 import { state } from "../../state";
 class GenerSala extends HTMLElement {
    async connectedCallback() {
-      (document.querySelector(".load") as HTMLDivElement).style.display =
-         "none";
       await state.subscribe(async () => {
          const cs = await state.getState();
          if (cs.gameState.opponentConect && cs.gameState.youConect) {
@@ -16,7 +14,8 @@ class GenerSala extends HTMLElement {
          }
       });
       await this.render();
-
+      (document.querySelector(".load") as HTMLDivElement).style.display =
+         "none";
       const cs = await state.getState();
       await state.listenersRoom(cs.gameState.rtdb);
    }

@@ -1,6 +1,7 @@
 import { ref, onValue, app, getDatabase, child, get, update } from "./db";
-const API_URL = "http://localhost:3000";
-// "https://desafio-m6-nlba.onrender.com";
+const API_URL =
+   "https://desafio-m6-nlba.onrender.com" || "http://localhost:3000";
+
 type jugada = "papel" | "tijera" | "piedra";
 const state = {
    data: {
@@ -48,7 +49,7 @@ const state = {
    async pushEstate(cb?) {
       const cs = await this.getState();
 
-      await fetch(API_URL + "/rooms/" + cs.gameState.rtdb, {
+      const result = await fetch(API_URL + "/rooms/" + cs.gameState.rtdb, {
          method: "post",
          headers: {
             "content-type": "application/json",
@@ -59,7 +60,29 @@ const state = {
          cb();
       }
    },
+   async conectEstate() {
+      const cs = await this.getState();
 
+      await fetch(API_URL + "/rooms/conect/" + cs.gameState.rtdb, {
+         method: "post",
+         headers: {
+            "content-type": "application/json",
+         },
+         body: JSON.stringify(cs),
+      });
+   },
+
+   async validarRtdb(cb?) {
+      const cs = await this.getState();
+      const dbRef = ref(getDatabase());
+      const validacion = await get(child(dbRef, `rooms/${cs.gameState.rtdb}`));
+      if (validacion.exists()) {
+         await this.conectEstate();
+         return true;
+      } else {
+         return false;
+      }
+   },
    async getState() {
       const cs = await this.data;
       return cs;

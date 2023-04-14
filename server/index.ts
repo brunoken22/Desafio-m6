@@ -2,7 +2,6 @@ import * as express from "express";
 import { baseDeDatos, rtdb } from "./db";
 import { nanoid } from "nanoid";
 import * as cors from "cors";
-import { log } from "console";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -106,20 +105,32 @@ app.post("/rooms/:rtdbId", (req, res) => {
    const { rtdbId } = req.params;
    const refrtdb = rtdb.ref("/rooms/" + rtdbId + "/data");
 
-   // const refif = rtdb.ref("/rooms");
-   // refif.get().then((snapshot) => {
-   //    snapshot.forEach((doc) => {
-
-   // if (doc.key === rtdbId) {
    refrtdb.update(req.body).then(() => {
       return res.status(200).json({
          message: "State Enviado",
       });
    });
-   // }
-   //    });
-   // });
 });
+
+app.post("/rooms/conect/:rtdbId", (req, res) => {
+   const { rtdbId } = req.params;
+   const refrtdb = rtdb.ref("/rooms/" + rtdbId + "/data");
+
+   refrtdb.get().then((snapShot) => {
+      if (snapShot.exists()) {
+         refrtdb.update(req.body).then(() => {
+            return res.status(200).json({
+               message: "State Enviado",
+            });
+         });
+      } else {
+         return res.status(404).json({
+            message: "No se encontro Sala",
+         });
+      }
+   });
+});
+
 app.post("/delete/:rtdbId", (req, res) => {
    const { rtdbId } = req.params;
    const refrtdb = rtdb.ref("/rooms/" + rtdbId + "/data");
@@ -131,10 +142,10 @@ app.post("/delete/:rtdbId", (req, res) => {
    });
 });
 
-// app.use(express.static("dist"));
-// app.get("*", (req, res) => {
-//    res.sendFile(__dirname + "../dist/index.html");
-// });
+app.use(express.static("dist"));
+app.get("*", (req, res) => {
+   res.sendFile(__dirname + "../dist/index.html");
+});
 
 app.listen(port, () => {
    console.log("http://localhost:" + port);

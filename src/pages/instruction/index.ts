@@ -8,8 +8,8 @@ import { log } from "console";
 const hands = ["papel", "piedra", "tijera"];
 class Instruction extends HTMLElement {
    async connectedCallback() {
+      // console.log(" instru");
       await state.subscribe(async () => {
-         console.log("subscribe instru");
          const cs = (await state.getState()) as any;
          if (cs.gameState.opponentPlay && cs.gameState.play) {
             await this.render();

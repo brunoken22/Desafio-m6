@@ -5,6 +5,8 @@ import { Router } from "@vaadin/router";
 import { state } from "../../state";
 class Play extends HTMLElement {
    async connectedCallback() {
+      // console.log("play");
+
       await state.subscribe(async () => {
          const cs = await state.getState();
 
@@ -16,8 +18,8 @@ class Play extends HTMLElement {
                cs.gameState.opponentPlay = false;
             }
             await state.pushEstate();
-            await this.render();
             Router.go("/result");
+            await this.render();
          }
       });
       await this.render();
@@ -48,10 +50,10 @@ class Play extends HTMLElement {
       const hands = this.querySelectorAll(".selec") as any;
       for (let el of hands) {
          el.addEventListener("click", async (e) => {
-            this.style.opacity = "0.4";
+            // this.style.opacity = "0.4";
 
-            (document.querySelector(".load") as HTMLDivElement).style.display =
-               "flex";
+            // (document.querySelector(".load") as HTMLDivElement).style.display =
+            //    "flex";
             const countdown = this.querySelector(
                "custom-countdown"
             ) as HTMLElement;
@@ -63,10 +65,10 @@ class Play extends HTMLElement {
                }
             }
             const handss = this.querySelector(".hands") as any;
-            const handsss = e.target.shadowRoot
-               .querySelector("div")
-               .querySelector("img");
-            handsss.style.width = "100px";
+            // const handsss = e.target.shadowRoot
+            //    .querySelector("div")
+            //    .querySelector("img");
+            // handsss.style.width = "100px";
             (el as any).style.cssText = " margin-top:-100px;opacity:1;";
             handss.style.justifyContent = "center";
             const cs = await state.getState();

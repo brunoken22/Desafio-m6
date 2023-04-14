@@ -7,6 +7,53 @@
 body{
    background-image: url(./img/fondo.png);
 }
+
+.rtdb-noexist{
+  font-size: 1.5rem;
+  display: flex;
+  position: absolute;
+  top: 27%;
+  left: 0;
+  right: 0;
+  justify-content: center;
+  align-items: center;
+  margin-bottom:50px;
+
+  /* transition:cubic-bezier(0.6, 0.04, 0.98, 0.335); */
+  animation: noise-anim 10s  linear alternate-reverse;
+
+}
+
+.rtdb-id{
+  background-color: rgba(230, 91, 91, 0.8);
+  border-radius: 50px;
+  padding:10px 20px;
+}
+
+@keyframes noise-anim {
+      0% {
+        opacity: 0;
+      }
+      50% {
+        opacity: 0.3;
+      }
+      100% {
+        opacity: 0.5;
+      }
+      100% {
+        opacity: 0.6;
+      }
+      
+      100% {
+        opacity: 0.7;
+      }
+      100% {
+        opacity: 1;
+      }
+      
+
+}  
+
 .load{
   position: absolute;
   top: 0;
@@ -57,25 +104,25 @@ body{
 }
 @keyframes lqt {
   0%, 100% {
-    background-image: linear-gradient(rgb(104, 104, 248) 40px, transparent 0);
+    background-image: linear-gradient(#903623 40px, transparent 0);
     background-position: 0% 0px;
   }
   50% {
-    background-image: linear-gradient(rgb(104, 104, 248)40px, transparent 0);
+    background-image: linear-gradient(#903623 40px, transparent 0);
     background-position: 0% 40px;
   }
   50.1% {
-    background-image: linear-gradient(rgb(104, 104, 248) 40px, transparent 0);
+    background-image: linear-gradient(#903623 40px, transparent 0);
     background-position: 0% -40px;
   }
 }
 @keyframes lqb {
   0% {
-    background-image: linear-gradient(rgb(104, 104, 248) 40px, transparent 0);
+    background-image: linear-gradient(#903623 40px, transparent 0);
     background-position: 0 40px;
   }
   100% {
-    background-image: linear-gradient(rgb(104, 104, 248) 40px, transparent 0);
+    background-image: linear-gradient(#903623 40px, transparent 0);
     background-position: 0 -40px;
   }
 }

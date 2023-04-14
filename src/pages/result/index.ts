@@ -3,10 +3,11 @@ import { Router } from "@vaadin/router";
 const hands = ["tijera", "piedra", "papel"];
 class Result extends HTMLElement {
    async connectedCallback() {
-      await state.subscribe(async () => {
-         await this.render();
-      });
+      // console.log("result");
+
       await this.render();
+      const cs = await state.getState();
+      console.log(cs);
    }
    async render() {
       const cs = await state.getState();
