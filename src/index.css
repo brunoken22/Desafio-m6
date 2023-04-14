@@ -78,8 +78,8 @@ body{
   background-position: 50% 0px;
   animation: spinx 5s linear infinite;
   position: absolute;
-  top: 50%;
-  left: 47%;
+  top: 48%;
+  left: 46%;
 }
 .loader:before, .loader:after {
   content: "";

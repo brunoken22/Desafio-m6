@@ -24,9 +24,10 @@ class Boton extends HTMLElement {
                border: 10px solid #001997;
                border-radius:10px;
                cursor:pointer;
-               margin-bottom:10px;
+               margin-right:20px ;
+               margin-left:20px ;
                width:100%;
-               
+              
             }
             .true{
                height:100px;
@@ -34,6 +35,12 @@ class Boton extends HTMLElement {
             @media(min-width:400px){
                .true{
                   height:85px;
+               }
+               .btn{
+                  margin-right:0 ;
+                  margin-left:0;
+                  margin-bottom:10px;
+                  width:100%;
                }
             }
          `;

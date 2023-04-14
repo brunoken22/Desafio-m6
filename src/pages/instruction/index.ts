@@ -4,11 +4,9 @@ const piedra = require("../../img/piedra.png");
 const fondo = require("../../img/fondo.png");
 import { Router } from "@vaadin/router";
 import { state } from "../../state";
-import { log } from "console";
 const hands = ["papel", "piedra", "tijera"];
 class Instruction extends HTMLElement {
    async connectedCallback() {
-      // console.log(" instru");
       await state.subscribe(async () => {
          const cs = (await state.getState()) as any;
          if (cs.gameState.opponentPlay && cs.gameState.play) {
@@ -115,7 +113,7 @@ class Instruction extends HTMLElement {
       display:flex;
       justify-content:space-between;
       align-items:center;  
-      font-size:1.3rem;
+      font-size:1.5rem;
       padding:5px 10px;
 
    }
@@ -130,6 +128,8 @@ class Instruction extends HTMLElement {
       
    }
    .instruction{
+      margin-right:15px;
+      margin-left:15px;
    }
    .hand{
       display:flex;

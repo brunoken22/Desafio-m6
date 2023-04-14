@@ -5,43 +5,39 @@ import { Router } from "@vaadin/router";
 import { state } from "../../state";
 class Play extends HTMLElement {
    async connectedCallback() {
-      // console.log("play");
-
-      await state.subscribe(async () => {
-         const cs = await state.getState();
-
-         if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
-            const cs = await state.getState();
-            if (state.nameTemp === cs.gameState.name) {
-               cs.gameState.play = false;
-            } else {
-               cs.gameState.opponentPlay = false;
-            }
-            await state.pushEstate();
-            Router.go("/result");
-            await this.render();
-         }
-      });
       await this.render();
+      const cs = await state.getState();
 
+      cs.gameState.play = false;
+      cs.gameState.opponentPlay = false;
       let num = 5;
       const conteo = setInterval(async () => {
          num--;
          const cs = await state.getState();
          if (num < 1) {
             clearInterval(conteo);
-
             await state.pushEstate();
+            console.log("push");
+
             Router.go("/instruction");
          } else if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
             clearInterval(conteo);
             const cs = await state.getState();
-            if (state.nameTemp === cs.gameState.name) {
-               cs.gameState.play = false;
-            } else {
-               cs.gameState.opponentPlay = false;
+
+            if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
+               const ganador = state.whoWins(
+                  cs.gameState.youSelect,
+                  cs.gameState.opponentSelect
+               );
+
+               if (ganador === "true") {
+                  cs.score.you++;
+               } else if (ganador === "false") {
+                  cs.score.oponent++;
+               }
+
+               await state.pushEstate();
             }
-            await state.pushEstate();
             Router.go("/result");
          }
       }, 1000);
@@ -50,10 +46,6 @@ class Play extends HTMLElement {
       const hands = this.querySelectorAll(".selec") as any;
       for (let el of hands) {
          el.addEventListener("click", async (e) => {
-            // this.style.opacity = "0.4";
-
-            // (document.querySelector(".load") as HTMLDivElement).style.display =
-            //    "flex";
             const countdown = this.querySelector(
                "custom-countdown"
             ) as HTMLElement;
@@ -79,22 +71,6 @@ class Play extends HTMLElement {
                cs.gameState.opponentSelect = (e.target as any).id;
             }
             await state.pushEstate();
-            if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
-               const cs = await state.getState();
-
-               const ganador = state.whoWins(
-                  cs.gameState.youSelect,
-                  cs.gameState.opponentSelect
-               );
-
-               if (ganador === "true") {
-                  cs.score.you++;
-               } else if (ganador === "false") {
-                  cs.score.oponent++;
-               }
-
-               await state.pushEstate();
-            }
          });
       }
    }

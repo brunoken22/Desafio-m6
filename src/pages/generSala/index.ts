@@ -9,7 +9,6 @@ class GenerSala extends HTMLElement {
       await state.subscribe(async () => {
          const cs = await state.getState();
          if (cs.gameState.opponentConect && cs.gameState.youConect) {
-            console.log("subscrito gener");
             Router.go("/instruction");
          }
       });

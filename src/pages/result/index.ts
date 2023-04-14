@@ -3,11 +3,7 @@ import { Router } from "@vaadin/router";
 const hands = ["tijera", "piedra", "papel"];
 class Result extends HTMLElement {
    async connectedCallback() {
-      // console.log("result");
-
       await this.render();
-      const cs = await state.getState();
-      console.log(cs);
    }
    async render() {
       const cs = await state.getState();
@@ -54,6 +50,10 @@ class Result extends HTMLElement {
             height: 100vh;
          }
       }
+      .btn{
+        
+      }
+    
       `;
       this.appendChild(style);
 
@@ -72,6 +72,22 @@ class Result extends HTMLElement {
       }
       const btn = this.querySelector(".btn") as HTMLButtonElement;
       btn.addEventListener("click", async () => {
+         document.body.style.backgroundColor = "";
+         document.body.style.backgroundImage = "url(../../img/fondo.png)";
+
+         const cs = await state.getState();
+         if (state.nameTemp === cs.gameState.name) {
+            if (cs.gameState.play) {
+               cs.gameState.play = false;
+               await state.pushEstate();
+            }
+         } else {
+            if (cs.gameState.opponentPlay) {
+               cs.gameState.opponentPlay = false;
+               await state.pushEstate();
+            }
+         }
+
          Router.go("/instruction");
       });
    }

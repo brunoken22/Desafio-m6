@@ -26,28 +26,46 @@ customElements.define(
          const style = document.createElement("style");
          style.innerHTML = `
                .score{
-                  width:inherit;
-                  margin:15px auto;
+                  width:100%;
                   border:solid 10px;
                   border-radius:20px;
-                  padding:20px;
                   background-color:#fff;
+                  margin:auto 5px;
+                  padding:10px
                }
+               @media(min-width:400px){
+                  .score{
+                     margin:auto 0;
+                     padding:20px;
 
+                  }
+               }
                .score h3{
                   text-align:center;
-                  font-size:3.5rem;
                   margin-top:0;
                   margin-bottom:0;
+                  font-size:2.5rem;
+
+               }
+               @media(min-width:400px){
+                  .score h3{
+                     font-size:3.5rem;
+            
+
+                  }
                }
                .puntos{
 
                }
                .puntos h4{
+                  font-size:1.8rem;
                   text-align:end;
-                  font-size:2.5rem;
                   margin-bottom:0;
                   margin-top:30px
+               }
+               @media(min-width:400px){
+                  font-size:2.5rem;
+                
                }
             `;
 
