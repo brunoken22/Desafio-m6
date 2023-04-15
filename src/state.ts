@@ -1,6 +1,7 @@
-import { ref, onValue, app, getDatabase, child, get, update } from "./db";
+import { ref, onValue, app, getDatabase, child, get } from "./db";
 const API_URL =
    "https://desafio-m6-nlba.onrender.com" || "http://localhost:3000";
+
 type jugada = "papel" | "tijera" | "piedra";
 const state = {
    data: {
@@ -71,13 +72,30 @@ const state = {
       });
    },
 
-   async validarRtdb(cb?) {
+   async validarRtdb() {
       const cs = await this.getState();
       const dbRef = ref(getDatabase());
       const validacion = await get(child(dbRef, `rooms/${cs.gameState.rtdb}`));
       if (validacion.exists()) {
          await this.conectEstate();
          return true;
+      } else {
+         return false;
+      }
+   },
+   async validarCUsuarios(nombre) {
+      const cs = await this.getState();
+      const dbRef = ref(getDatabase());
+      const validacion = await get(
+         child(dbRef, `rooms/${cs.gameState.rtdb}/data`)
+      );
+      if (validacion.exists()) {
+         const datos = validacion.val();
+         const nmaeYou = datos.gameState.name;
+         const nameOpponent = datos.gameState.opponentName;
+         if (nmaeYou && nameOpponent) {
+            return true;
+         }
       } else {
          return false;
       }
@@ -90,24 +108,12 @@ const state = {
       this.data = newState;
       this.listeners();
    },
-   async deleteSelect() {
-      const cs = await state.getState();
-      if (state.nameTemp === cs.gameState.name) {
-         cs.gameState.play = false;
-         cs.gameState.youSelect = "";
-      } else {
-         cs.gameState.opponentPlay = false;
-         cs.gameState.opponentSelect = "";
-      }
-      await this.pushEstate();
-   },
    //AGREGGA TU NOMBRE AL STATE
    async setName(name: string) {
       const { gameState } = await this.getState();
       gameState.name = name;
       gameState.youConect = true;
    },
-
    // crea un usuario en fireStore
    async signIn() {
       const cs = await this.getState();

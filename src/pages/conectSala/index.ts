@@ -3,7 +3,6 @@ const tijera = require("../../img/tijera.png");
 const piedra = require("../../img/piedra.png");
 import { Router } from "@vaadin/router";
 import { state } from "../../state";
-import { log } from "console";
 export class ConnectSala extends HTMLElement {
    async connectedCallback() {
       await this.render();
@@ -41,12 +40,13 @@ export class ConnectSala extends HTMLElement {
          const validacion = (await state.validarRtdb()) as any;
 
          if (validacion) {
-            console.log("generasala");
-
-            Router.go("/generSala");
+            const name = await state.validarCUsuarios(nameopo);
+            if (name) {
+               Router.go("/error");
+            } else {
+               Router.go("/generSala");
+            }
          } else {
-            console.log("render");
-
             this.style.opacity = "1";
 
             (document.querySelector(".load") as HTMLDivElement).style.display =
@@ -62,7 +62,7 @@ export class ConnectSala extends HTMLElement {
                (
                   document.querySelector(".rtdb-noexist") as HTMLDivElement
                ).style.display = "none";
-            }, 10000);
+            }, 15000);
          }
       });
    }
