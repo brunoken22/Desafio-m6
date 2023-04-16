@@ -13,6 +13,7 @@ import "./pages/instruction";
 import "./pages/play";
 import "./pages/result";
 import "./pages/welcome";
+import "./pages/error";
 import "./db";
 // function main() {}
 // main();

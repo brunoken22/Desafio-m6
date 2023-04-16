@@ -77,7 +77,6 @@ const state = {
       const dbRef = ref(getDatabase());
       const validacion = await get(child(dbRef, `rooms/${cs.gameState.rtdb}`));
       if (validacion.exists()) {
-         await this.conectEstate();
          return true;
       } else {
          return false;
@@ -91,13 +90,19 @@ const state = {
       );
       if (validacion.exists()) {
          const datos = validacion.val();
+         console.log(datos);
+
          const nmaeYou = datos.gameState.name;
          const nameOpponent = datos.gameState.opponentName;
          if (nmaeYou && nameOpponent) {
+            console.log(nmaeYou);
+
             return true;
+         } else {
+            console.log(nameOpponent);
+            await this.conectEstate();
+            return false;
          }
-      } else {
-         return false;
       }
    },
    async getState() {

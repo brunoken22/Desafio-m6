@@ -58,7 +58,7 @@ class CodigoSala extends HTMLElement {
                </div>
             </div>
           
-            </form>
+         </form>
             <div class='hand'>
             <custom-hand direction="${papel}"></custom-hand>
             <custom-hand  direction="${tijera}"></custom-hand>
@@ -66,10 +66,6 @@ class CodigoSala extends HTMLElement {
             </div>
             `;
 
-      // <div class="notification is-success error" style="display:none">
-      //    <button class="delete"></button>
-      //    Minimo 3 caracteres
-      // </div>;
       style.innerHTML = `
       
       .contenedor{

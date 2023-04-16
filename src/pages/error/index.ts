@@ -5,7 +5,8 @@ import { Router } from "@vaadin/router";
 class Error extends HTMLElement {
    connectedCallback() {
       this.render();
-
+      (document.querySelector(".load") as HTMLDivElement).style.display =
+         "none";
       const btn = this.querySelector(".btn");
       btn?.addEventListener("click", async () => {
          Router.go("/welcome");
