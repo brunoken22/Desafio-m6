@@ -11,7 +11,7 @@ class Result extends HTMLElement {
         <h1> ${cs.gameState.name} vs ${cs.gameState.opponentName}</h1>
       `;
 
-      const ganador = state.whoWins(
+      const ganador = state.whoWinsImg(
          cs.gameState.youSelect,
          cs.gameState.opponentSelect
       );
@@ -79,15 +79,21 @@ class Result extends HTMLElement {
          if (state.nameTemp === cs.gameState.name) {
             if (cs.gameState.play) {
                cs.gameState.play = false;
-               await state.pushEstate();
+               await state.connectPlay();
+            }
+            if (hands.includes(cs.gameState.youSelect)) {
+               cs.gameState.youSelect = "";
             }
          } else {
             if (cs.gameState.opponentPlay) {
                cs.gameState.opponentPlay = false;
-               await state.pushEstate();
+               await state.connectOpponent();
+            }
+            if (hands.includes(cs.gameState.opponentSelect)) {
+               cs.gameState.opponentSelect = "";
             }
          }
-
+         await state.pushEstate();
          Router.go("/instruction");
       });
    }

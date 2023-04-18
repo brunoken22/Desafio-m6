@@ -2,6 +2,7 @@ import * as express from "express";
 import { baseDeDatos, rtdb } from "./db";
 import { nanoid } from "nanoid";
 import * as cors from "cors";
+import { log } from "console";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -100,6 +101,31 @@ app.get("/rooms/:id", (req, res) => {
       });
 });
 
+//MANDO play A LA RTDB
+app.post("/actualizar/:rtdbId/play", (req, res) => {
+   const { rtdbId } = req.params;
+
+   const refrtdb = rtdb.ref("/rooms/" + rtdbId + "/data/gameState");
+
+   refrtdb.update(req.body).then(() => {
+      return res.status(200).json({
+         message: "Connect play Actualizado",
+      });
+   });
+});
+//MANDO opponent A LA RTDB
+app.post("/actualizar/:rtdbId/opponent", (req, res) => {
+   const { rtdbId } = req.params;
+
+   const refrtdb = rtdb.ref("/rooms/" + rtdbId + "/data/gameState");
+
+   refrtdb.update(req.body).then(() => {
+      return res.status(200).json({
+         message: "Connect Opponet Actualizado",
+      });
+   });
+});
+
 //MANDO state A LA RTDB
 app.post("/rooms/:rtdbId", (req, res) => {
    const { rtdbId } = req.params;
@@ -111,7 +137,6 @@ app.post("/rooms/:rtdbId", (req, res) => {
       });
    });
 });
-
 app.post("/rooms/conect/:rtdbId", (req, res) => {
    const { rtdbId } = req.params;
    const refrtdb = rtdb.ref("/rooms/" + rtdbId + "/data");
@@ -142,10 +167,10 @@ app.post("/delete/:rtdbId", (req, res) => {
    });
 });
 
-app.use(express.static("dist"));
-app.get("*", (req, res) => {
-   res.sendFile(__dirname + "../dist/index.html");
-});
+// app.use(express.static("dist"));
+// app.get("*", (req, res) => {
+//    res.sendFile(__dirname + "../dist/index.html");
+// });
 
 app.listen(port, () => {
    console.log("http://localhost:" + port);

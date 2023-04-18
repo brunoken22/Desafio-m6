@@ -1,10 +1,23 @@
 const papel = require("../../img/papel.png");
 const tijera = require("../../img/tijera.png");
 const piedra = require("../../img/piedra.png");
+const fondo = require("../../img/fondo.png");
+
 import { Router } from "@vaadin/router";
 import { state } from "../../state";
 class Play extends HTMLElement {
    async connectedCallback() {
+      // await state.subscribe(async () => {
+      //    const cs = await state.getState();
+
+      //    const css = await state.getState();
+      //    if (css.gameState.opponentSelect && css.gameState.youSelect) {
+      //       await state.whoWins(
+      //          css.gameState.youSelect,
+      //          css.gameState.opponentSelect
+      //       );
+      //    }
+      // });
       await this.render();
       const cs = await state.getState();
 
@@ -17,28 +30,24 @@ class Play extends HTMLElement {
          if (num < 1) {
             clearInterval(conteo);
             await state.pushEstate();
-            console.log("push");
 
             Router.go("/instruction");
          } else if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
             clearInterval(conteo);
-            const cs = await state.getState();
-
-            if (cs.gameState.opponentSelect && cs.gameState.youSelect) {
-               const ganador = state.whoWins(
-                  cs.gameState.youSelect,
-                  cs.gameState.opponentSelect
-               );
-
-               if (ganador === "true") {
-                  cs.score.you++;
-               } else if (ganador === "false") {
-                  cs.score.oponent++;
+            const css = await state.getState();
+            if (css.gameState.opponentSelect && css.gameState.youSelect) {
+               if (state.nameTemp) {
+                  await state.whoWins(
+                     css.gameState.youSelect,
+                     css.gameState.opponentSelect
+                  );
+                  Router.go("/result");
+               } else {
+                  setTimeout(() => {
+                     Router.go("/result");
+                  }, 600);
                }
-
-               await state.pushEstate();
             }
-            Router.go("/result");
          }
       }, 1000);
    }
@@ -78,6 +87,7 @@ class Play extends HTMLElement {
    async render() {
       const style = document.createElement("style");
       this.classList.add("contenedor");
+      document.body.style.backgroundImage = `url(${fondo})`;
 
       this.innerHTML = `
       <div class="oponent-hands">

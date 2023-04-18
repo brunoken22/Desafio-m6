@@ -10,7 +10,6 @@ class Instruction extends HTMLElement {
       await state.subscribe(async () => {
          const cs = (await state.getState()) as any;
          if (cs.gameState.opponentPlay && cs.gameState.play) {
-            await this.render();
             Router.go("/play");
          }
       });
@@ -23,17 +22,13 @@ class Instruction extends HTMLElement {
 
          if (cs.gameState.name === state.nameTemp) {
             cs.gameState.play = true;
-            if (hands.includes(cs.gameState.youSelect)) {
-               cs.gameState.youSelect = "";
-            }
+
+            await state.connectPlay();
          } else {
             cs.gameState.opponentPlay = true;
-            if (hands.includes(cs.gameState.opponentSelect)) {
-               cs.gameState.opponentSelect = "";
-            }
-         }
 
-         await state.pushEstate();
+            await state.connectOpponent();
+         }
 
          if (cs.gameState.opponentPlay && cs.gameState.play) {
             Router.go("/play");
@@ -52,7 +47,7 @@ class Instruction extends HTMLElement {
       const cs = await state.getState();
       const style = document.createElement("style");
       this.classList.add("contenedor");
-
+      document.body.style.backgroundImage = `url(${fondo})`;
       //"Presioná jugar y elegí: piedra, papel o tijera antes de que pasen los 5 segundos.
       this.innerHTML = `
       <div class="detalles">

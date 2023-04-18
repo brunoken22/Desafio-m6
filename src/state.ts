@@ -1,7 +1,6 @@
 import { ref, onValue, app, getDatabase, child, get } from "./db";
-const API_URL =
-   "https://desafio-m6-nlba.onrender.com" || "http://localhost:3000";
-
+const API_URL = "http://localhost:3000";
+// "https://desafio-m6-nlba.onrender.com" ||
 type jugada = "papel" | "tijera" | "piedra";
 const state = {
    data: {
@@ -60,6 +59,32 @@ const state = {
          cb();
       }
    },
+   async connectOpponent() {
+      const cs = await this.getState();
+
+      await fetch(API_URL + "/actualizar/" + cs.gameState.rtdb + "/opponent", {
+         method: "post",
+         headers: {
+            "content-type": "application/json",
+         },
+         body: JSON.stringify({
+            opponentPlay: cs.gameState.opponentPlay,
+         }),
+      });
+   },
+   async connectPlay() {
+      const cs = await this.getState();
+
+      await fetch(API_URL + "/actualizar/" + cs.gameState.rtdb + "/play", {
+         method: "post",
+         headers: {
+            "content-type": "application/json",
+         },
+         body: JSON.stringify({
+            play: cs.gameState.play,
+         }),
+      });
+   },
    async conectEstate() {
       const cs = await this.getState();
 
@@ -90,16 +115,12 @@ const state = {
       );
       if (validacion.exists()) {
          const datos = validacion.val();
-         console.log(datos);
 
          const nmaeYou = datos.gameState.name;
          const nameOpponent = datos.gameState.opponentName;
          if (nmaeYou && nameOpponent) {
-            console.log(nmaeYou);
-
             return true;
          } else {
-            console.log(nameOpponent);
             await this.conectEstate();
             return false;
          }
@@ -171,7 +192,7 @@ const state = {
       this.setState(cs);
    },
 
-   whoWins(myPlay: jugada, computerPlay: jugada) {
+   async whoWins(myPlay: jugada, computerPlay: jugada) {
       const ganeConTijera = myPlay == "tijera" && computerPlay == "papel";
       const ganeConPiedra = myPlay == "piedra" && computerPlay == "tijera";
       const ganeConPapel = myPlay == "papel" && computerPlay == "piedra";
@@ -188,7 +209,36 @@ const state = {
          computerGaneConPiedra,
          computerGaneConPapel,
       ].includes(true);
+      const cs = await this.getState();
+      if (gane === computerGane) {
+         return "empate";
+      } else if (gane) {
+         cs.score.you++;
+         await state.pushEstate();
+         return "true";
+      } else if (computerGane) {
+         cs.score.oponent++;
+         await state.pushEstate();
+         return "false";
+      }
+   },
+   whoWinsImg(myPlay: jugada, computerPlay: jugada) {
+      const ganeConTijera = myPlay == "tijera" && computerPlay == "papel";
+      const ganeConPiedra = myPlay == "piedra" && computerPlay == "tijera";
+      const ganeConPapel = myPlay == "papel" && computerPlay == "piedra";
+      const gane = [ganeConPapel, ganeConTijera, ganeConPiedra].includes(true);
 
+      const computerGaneConTijera =
+         computerPlay == "tijera" && myPlay == "papel";
+      const computerGaneConPiedra =
+         computerPlay == "piedra" && myPlay == "tijera";
+      const computerGaneConPapel =
+         computerPlay == "papel" && myPlay == "piedra";
+      const computerGane = [
+         computerGaneConTijera,
+         computerGaneConPiedra,
+         computerGaneConPapel,
+      ].includes(true);
       if (gane === computerGane) {
          return "empate";
       } else if (gane) {
