@@ -1,6 +1,7 @@
 import { ref, onValue, app, getDatabase, child, get } from "./db";
-const API_URL = "http://localhost:3000";
-// "https://desafio-m6-nlba.onrender.com" ||
+
+const API_URL =
+   "https://desafio-m6-nlba.onrender.com" || "http://localhost:3000";
 type jugada = "papel" | "tijera" | "piedra";
 const state = {
    data: {

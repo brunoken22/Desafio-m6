@@ -7,17 +7,6 @@ import { Router } from "@vaadin/router";
 import { state } from "../../state";
 class Play extends HTMLElement {
    async connectedCallback() {
-      // await state.subscribe(async () => {
-      //    const cs = await state.getState();
-
-      //    const css = await state.getState();
-      //    if (css.gameState.opponentSelect && css.gameState.youSelect) {
-      //       await state.whoWins(
-      //          css.gameState.youSelect,
-      //          css.gameState.opponentSelect
-      //       );
-      //    }
-      // });
       await this.render();
       const cs = await state.getState();
 
