@@ -1,5 +1,4 @@
 import * as admin from 'firebase-admin';
-console.log(process.env.FIREBASE);
 
 admin.initializeApp({
   credential: admin.credential.cert(JSON.parse(process.env.FIREBASE as string)),
