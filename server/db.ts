@@ -1,12 +1,11 @@
-import * as admin from "firebase-admin";
-import * as serviceAccount from "./firebase.json";
+import * as admin from 'firebase-admin';
 
 admin.initializeApp({
-   credential: admin.credential.cert(serviceAccount as any),
-   databaseURL: "https://desafio-m6-6815b-default-rtdb.firebaseio.com",
+  credential: admin.credential.cert(process.env.FIREBASE as string),
+  databaseURL: 'https://desafio-m6-6815b-default-rtdb.firebaseio.com',
 });
 
 const baseDeDatos = admin.firestore();
 const rtdb = admin.database();
 
-export { baseDeDatos, rtdb };
+export {baseDeDatos, rtdb};
