@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
+    "@types/dotenv": "^8.2.0",
     "@types/node": "^20.8.4",
     "@vaadin/router": "^1.7.4",
     "cors": "^2.8.5",
@@ -17,7 +18,7 @@
   "scripts": {
     "dev": "parcel serve ./src/index.html",
     "dev:front": "parcel serve ./src/index.html",
-    "dev:back": "nodemon --watch ./server/index.ts --exec ts-node ./server/index.ts",
+    "dev:back": "nodemon --watch ./server/dev.ts --exec ts-node ./server/dev.ts",
     "build:front": "parcel build ./src/index.html",
     "build:back": "tsc ",
     "build": "yarn build:front && yarn build:back",

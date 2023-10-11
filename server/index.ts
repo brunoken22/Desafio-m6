@@ -2,7 +2,6 @@ import * as express from 'express';
 import {baseDeDatos, rtdb} from './db';
 import {nanoid} from 'nanoid';
 import * as cors from 'cors';
-
 const app = express();
 const port = process.env.PORT || 3000;
 
