@@ -154,10 +154,8 @@ const state = {
     });
 
     const user = await newUser.json();
-    console.log(user);
 
     const usrId = user.userId || user.id;
-    console.log(usrId);
 
     cs.gameState.userId = usrId;
     this.setState(cs);

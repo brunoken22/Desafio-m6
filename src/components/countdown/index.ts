@@ -1,24 +1,24 @@
-import { Router } from "@vaadin/router";
-import { state } from "../../state";
+import {Router} from '@vaadin/router';
+import {state} from '../../state';
 class Countdown extends HTMLElement {
-   connectedCallback() {
-      this.render();
-      let cantidad = 5;
+  connectedCallback() {
+    this.render();
+    let cantidad = 5;
 
-      const countNumber = this.querySelector(".countdown-number") as any;
-      let tiempo = setInterval(async () => {
-         cantidad--;
+    const countNumber = this.querySelector('.countdown-number') as any;
+    let tiempo = setInterval(async () => {
+      cantidad--;
 
-         countNumber.innerHTML = cantidad.toString();
+      countNumber.innerHTML = cantidad.toString();
 
-         if (cantidad < 1) {
-            clearInterval(tiempo);
-         }
-      }, 1000);
-   }
-   render() {
-      this.classList.add("countdown");
-      this.innerHTML = `
+      if (cantidad < 1) {
+        clearInterval(tiempo);
+      }
+    }, 1000);
+  }
+  render() {
+    this.classList.add('countdown');
+    this.innerHTML = `
       <h3 class="countdown-number">5</h3>
       <svg class="svg">
         <circle class="circle" r="90" cx="165" cy="140"></circle>
@@ -26,14 +26,15 @@ class Countdown extends HTMLElement {
       </svg>
       `;
 
-      const style = document.createElement("style") as any;
-      style.innerHTML = `
+    const style = document.createElement('style') as any;
+    style.innerHTML = `
           .countdown{
               margin: 0 auto;
               height:300px;
               display:flex;
               flex-direction:column;
               align-items:center;
+              position:relative;
             }
             .countdown-number {
               position: absolute;
@@ -41,7 +42,7 @@ class Countdown extends HTMLElement {
               font-size: 72px;
               text-align: center;
               color: #000;
-              top:32%;
+              top:30%;
             }
             
             .svg {  
@@ -72,7 +73,7 @@ class Countdown extends HTMLElement {
             }
     `;
 
-      this.appendChild(style);
-   }
+    this.appendChild(style);
+  }
 }
-customElements.define("custom-countdown", Countdown);
+customElements.define('custom-countdown', Countdown);
