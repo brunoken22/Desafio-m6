@@ -15,7 +15,6 @@ app.get('/env', (req, res) => {
   res.json({
     environment: process.env.ENV,
     back: process.env.BACKEND_URL,
-    firebase: process.env.FIREBASE,
   });
 });
 
