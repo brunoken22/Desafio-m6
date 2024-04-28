@@ -1,4 +1,4 @@
-# Juego de Piedra, Papel y Tijera
+# Juego de Piedra, Papel y Tijera (ONLINE)
 
 Este es un simple juego de piedra, papel y tijera.
 
